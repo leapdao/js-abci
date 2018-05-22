@@ -23,9 +23,10 @@ message Request {
     RequestQuery query = 7;
     RequestBeginBlock begin_block = 8;
     RequestCheckTx check_tx = 9;
-    RequestDeliverTx deliver_tx = 19;
+    RequestDeliverTx deliver_tx = 10;
     RequestEndBlock end_block = 11;
     RequestCommit commit = 12;
+    RequestSubmitBlock submit_block = 13;
   }
 }
 
@@ -80,6 +81,12 @@ message RequestEndBlock {
 message RequestCommit {
 }
 
+message RequestSubmitBlock {
+  int64 height = 1;
+  bytes prev_hash = 2;
+  repeated bytes txns = 3;
+}
+
 //----------------------------------------
 // Response types
 
@@ -97,6 +104,7 @@ message Response {
     ResponseDeliverTx deliver_tx = 10;
     ResponseEndBlock end_block = 11;
     ResponseCommit commit = 12;
+    ResponseSubmitBlock submit_block = 13;
   }
 }
 
@@ -175,6 +183,11 @@ message ResponseEndBlock {
 message ResponseCommit {
   // reserve 1
   bytes data = 2;
+}
+
+message ResponseSubmitBlock {
+  // reserve 1
+  bytes hash = 2;
 }
 
 //----------------------------------------
@@ -258,4 +271,5 @@ service ABCIApplication {
   rpc InitChain(RequestInitChain) returns (ResponseInitChain);
   rpc BeginBlock(RequestBeginBlock) returns (ResponseBeginBlock);
   rpc EndBlock(RequestEndBlock) returns (ResponseEndBlock);
+  rpc SubmitBlock(RequestSubmitBlock) returns (ResponseSubmitBlock);
 }
