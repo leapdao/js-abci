@@ -26,6 +26,7 @@ message Request {
     RequestDeliverTx deliver_tx = 19;
     RequestEndBlock end_block = 11;
     RequestCommit commit = 12;
+    RequestCheckBridge check_bridge = 13;
   }
 }
 
@@ -80,6 +81,10 @@ message RequestEndBlock {
 message RequestCommit {
 }
 
+message RequestCheckBridge {
+  int32 height = 1;
+}
+
 //----------------------------------------
 // Response types
 
@@ -97,6 +102,7 @@ message Response {
     ResponseDeliverTx deliver_tx = 10;
     ResponseEndBlock end_block = 11;
     ResponseCommit commit = 12;
+    ResponseCheckBridge check_bridge = 13;
   }
 }
 
@@ -175,6 +181,10 @@ message ResponseEndBlock {
 message ResponseCommit {
   // reserve 1
   bytes data = 2;
+}
+
+message ResponseCheckBridge {
+  uint32 status = 1;
 }
 
 //----------------------------------------
@@ -258,4 +268,5 @@ service ABCIApplication {
   rpc InitChain(RequestInitChain) returns (ResponseInitChain);
   rpc BeginBlock(RequestBeginBlock) returns (ResponseBeginBlock);
   rpc EndBlock(RequestEndBlock) returns (ResponseEndBlock);
+  rpc CheckBridge(RequestCheckBridge) returns (ResponseCheckBridge);
 }
