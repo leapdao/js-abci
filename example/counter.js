@@ -1,16 +1,53 @@
-let lotion = require('./lotion');
+let createABCIServer = require('abci')
 
-let app = lotion({
-  initialState: { count: 0 },     // initial blockchain state
-  target: 'tcp://localhost:46657',
-  abciPort: 46658,
-});
+// turn on debug logging
+require('debug').enable('abci*')
 
-app.use(function (state, tx) {
-  console.log(state, tx);
-  if(state.count === tx.nonce) {
-    state.count++
+let state = {
+  count: 0
+}
+
+let handlers = {
+  info (request) {
+    return {
+      data: 'Node.js counter app',
+      version: '0.0.0',
+      lastBlockHeight: 0,
+      lastBlockAppHash: Buffer.alloc(0)
+    }
+  },
+
+  checkTx (request) {
+    let tx = padTx(request.tx)
+    let number = tx.readUInt32BE(0)
+    if (number !== state.count) {
+      return { code: 1, log: 'tx does not match count' }
+    }
+    return { code: 0, log: 'tx succeeded' }
+  },
+
+  deliverTx (request) {
+    let tx = padTx(request.tx)
+    let number = tx.readUInt32BE(0)
+    if (number !== state.count) {
+      return { code: 1, log: 'tx does not match count' }
+    }
+
+    // update state
+    state.count += 1
+
+    return { code: 0, log: 'tx succeeded' }
   }
-});
+};
 
-app.listen(3000);
+// make sure the transaction data is 4 bytes long
+function padTx (tx) {
+  let buf = Buffer.alloc(4)
+  tx.copy(buf, 4 - tx.length)
+  return buf
+}
+
+let port = 26658
+createABCIServer(handlers).listen(port, () => {
+  console.log(`listening on port ${port}`)
+})
