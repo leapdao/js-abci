@@ -37,6 +37,9 @@ export namespace abci {
 
         /** Request commit */
         commit?: (abci.IRequestCommit|null);
+
+        /** Request checkBridge */
+        checkBridge?: (abci.IRequestCheckBridge|null);
     }
 
     /** Represents a Request. */
@@ -81,8 +84,11 @@ export namespace abci {
         /** Request commit. */
         public commit?: (abci.IRequestCommit|null);
 
+        /** Request checkBridge. */
+        public checkBridge?: (abci.IRequestCheckBridge|null);
+
         /** Request value. */
-        public value?: ("echo"|"flush"|"info"|"setOption"|"initChain"|"query"|"beginBlock"|"checkTx"|"deliverTx"|"endBlock"|"commit");
+        public value?: ("echo"|"flush"|"info"|"setOption"|"initChain"|"query"|"beginBlock"|"checkTx"|"deliverTx"|"endBlock"|"commit"|"checkBridge");
 
         /**
          * Creates a new Request instance using the specified properties.
@@ -1199,6 +1205,96 @@ export namespace abci {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a RequestCheckBridge. */
+    interface IRequestCheckBridge {
+
+        /** RequestCheckBridge height */
+        height?: (number|null);
+    }
+
+    /** Represents a RequestCheckBridge. */
+    class RequestCheckBridge implements IRequestCheckBridge {
+
+        /**
+         * Constructs a new RequestCheckBridge.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: abci.IRequestCheckBridge);
+
+        /** RequestCheckBridge height. */
+        public height: number;
+
+        /**
+         * Creates a new RequestCheckBridge instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns RequestCheckBridge instance
+         */
+        public static create(properties?: abci.IRequestCheckBridge): abci.RequestCheckBridge;
+
+        /**
+         * Encodes the specified RequestCheckBridge message. Does not implicitly {@link abci.RequestCheckBridge.verify|verify} messages.
+         * @param message RequestCheckBridge message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: abci.IRequestCheckBridge, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RequestCheckBridge message, length delimited. Does not implicitly {@link abci.RequestCheckBridge.verify|verify} messages.
+         * @param message RequestCheckBridge message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: abci.IRequestCheckBridge, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RequestCheckBridge message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RequestCheckBridge
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): abci.RequestCheckBridge;
+
+        /**
+         * Decodes a RequestCheckBridge message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RequestCheckBridge
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): abci.RequestCheckBridge;
+
+        /**
+         * Verifies a RequestCheckBridge message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RequestCheckBridge message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RequestCheckBridge
+         */
+        public static fromObject(object: { [k: string]: any }): abci.RequestCheckBridge;
+
+        /**
+         * Creates a plain object from a RequestCheckBridge message. Also converts values to other types if specified.
+         * @param message RequestCheckBridge
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: abci.RequestCheckBridge, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RequestCheckBridge to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a Response. */
     interface IResponse {
 
@@ -1237,6 +1333,9 @@ export namespace abci {
 
         /** Response commit */
         commit?: (abci.IResponseCommit|null);
+
+        /** Response checkBridge */
+        checkBridge?: (abci.IResponseCheckBridge|null);
     }
 
     /** Represents a Response. */
@@ -1284,8 +1383,11 @@ export namespace abci {
         /** Response commit. */
         public commit?: (abci.IResponseCommit|null);
 
+        /** Response checkBridge. */
+        public checkBridge?: (abci.IResponseCheckBridge|null);
+
         /** Response value. */
-        public value?: ("exception"|"echo"|"flush"|"info"|"setOption"|"initChain"|"query"|"beginBlock"|"checkTx"|"deliverTx"|"endBlock"|"commit");
+        public value?: ("exception"|"echo"|"flush"|"info"|"setOption"|"initChain"|"query"|"beginBlock"|"checkTx"|"deliverTx"|"endBlock"|"commit"|"checkBridge");
 
         /**
          * Creates a new Response instance using the specified properties.
@@ -2594,17 +2696,104 @@ export namespace abci {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a ResponseCheckBridge. */
+    interface IResponseCheckBridge {
+
+        /** ResponseCheckBridge status */
+        status?: (number|null);
+    }
+
+    /** Represents a ResponseCheckBridge. */
+    class ResponseCheckBridge implements IResponseCheckBridge {
+
+        /**
+         * Constructs a new ResponseCheckBridge.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: abci.IResponseCheckBridge);
+
+        /** ResponseCheckBridge status. */
+        public status: number;
+
+        /**
+         * Creates a new ResponseCheckBridge instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ResponseCheckBridge instance
+         */
+        public static create(properties?: abci.IResponseCheckBridge): abci.ResponseCheckBridge;
+
+        /**
+         * Encodes the specified ResponseCheckBridge message. Does not implicitly {@link abci.ResponseCheckBridge.verify|verify} messages.
+         * @param message ResponseCheckBridge message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: abci.IResponseCheckBridge, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ResponseCheckBridge message, length delimited. Does not implicitly {@link abci.ResponseCheckBridge.verify|verify} messages.
+         * @param message ResponseCheckBridge message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: abci.IResponseCheckBridge, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ResponseCheckBridge message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ResponseCheckBridge
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): abci.ResponseCheckBridge;
+
+        /**
+         * Decodes a ResponseCheckBridge message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ResponseCheckBridge
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): abci.ResponseCheckBridge;
+
+        /**
+         * Verifies a ResponseCheckBridge message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ResponseCheckBridge message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ResponseCheckBridge
+         */
+        public static fromObject(object: { [k: string]: any }): abci.ResponseCheckBridge;
+
+        /**
+         * Creates a plain object from a ResponseCheckBridge message. Also converts values to other types if specified.
+         * @param message ResponseCheckBridge
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: abci.ResponseCheckBridge, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ResponseCheckBridge to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a ConsensusParams. */
     interface IConsensusParams {
 
         /** ConsensusParams blockSize */
         blockSize?: (abci.IBlockSize|null);
 
-        /** ConsensusParams txSize */
-        txSize?: (abci.ITxSize|null);
-
-        /** ConsensusParams blockGossip */
-        blockGossip?: (abci.IBlockGossip|null);
+        /** ConsensusParams evidenceParams */
+        evidenceParams?: (abci.IEvidenceParams|null);
     }
 
     /** Represents a ConsensusParams. */
@@ -2619,11 +2808,8 @@ export namespace abci {
         /** ConsensusParams blockSize. */
         public blockSize?: (abci.IBlockSize|null);
 
-        /** ConsensusParams txSize. */
-        public txSize?: (abci.ITxSize|null);
-
-        /** ConsensusParams blockGossip. */
-        public blockGossip?: (abci.IBlockGossip|null);
+        /** ConsensusParams evidenceParams. */
+        public evidenceParams?: (abci.IEvidenceParams|null);
 
         /**
          * Creates a new ConsensusParams instance using the specified properties.
@@ -2700,7 +2886,7 @@ export namespace abci {
     interface IBlockSize {
 
         /** BlockSize maxBytes */
-        maxBytes?: (number|null);
+        maxBytes?: (number|Long|null);
 
         /** BlockSize maxGas */
         maxGas?: (number|Long|null);
@@ -2716,7 +2902,7 @@ export namespace abci {
         constructor(properties?: abci.IBlockSize);
 
         /** BlockSize maxBytes. */
-        public maxBytes: number;
+        public maxBytes: (number|Long);
 
         /** BlockSize maxGas. */
         public maxGas: (number|Long);
@@ -2792,187 +2978,91 @@ export namespace abci {
         public toJSON(): { [k: string]: any };
     }
 
-    /** Properties of a TxSize. */
-    interface ITxSize {
+    /** Properties of an EvidenceParams. */
+    interface IEvidenceParams {
 
-        /** TxSize maxBytes */
-        maxBytes?: (number|null);
-
-        /** TxSize maxGas */
-        maxGas?: (number|Long|null);
+        /** EvidenceParams maxAge */
+        maxAge?: (number|Long|null);
     }
 
-    /** Represents a TxSize. */
-    class TxSize implements ITxSize {
+    /** Represents an EvidenceParams. */
+    class EvidenceParams implements IEvidenceParams {
 
         /**
-         * Constructs a new TxSize.
+         * Constructs a new EvidenceParams.
          * @param [properties] Properties to set
          */
-        constructor(properties?: abci.ITxSize);
+        constructor(properties?: abci.IEvidenceParams);
 
-        /** TxSize maxBytes. */
-        public maxBytes: number;
-
-        /** TxSize maxGas. */
-        public maxGas: (number|Long);
+        /** EvidenceParams maxAge. */
+        public maxAge: (number|Long);
 
         /**
-         * Creates a new TxSize instance using the specified properties.
+         * Creates a new EvidenceParams instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns TxSize instance
+         * @returns EvidenceParams instance
          */
-        public static create(properties?: abci.ITxSize): abci.TxSize;
+        public static create(properties?: abci.IEvidenceParams): abci.EvidenceParams;
 
         /**
-         * Encodes the specified TxSize message. Does not implicitly {@link abci.TxSize.verify|verify} messages.
-         * @param message TxSize message or plain object to encode
+         * Encodes the specified EvidenceParams message. Does not implicitly {@link abci.EvidenceParams.verify|verify} messages.
+         * @param message EvidenceParams message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: abci.ITxSize, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: abci.IEvidenceParams, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified TxSize message, length delimited. Does not implicitly {@link abci.TxSize.verify|verify} messages.
-         * @param message TxSize message or plain object to encode
+         * Encodes the specified EvidenceParams message, length delimited. Does not implicitly {@link abci.EvidenceParams.verify|verify} messages.
+         * @param message EvidenceParams message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: abci.ITxSize, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: abci.IEvidenceParams, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a TxSize message from the specified reader or buffer.
+         * Decodes an EvidenceParams message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns TxSize
+         * @returns EvidenceParams
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): abci.TxSize;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): abci.EvidenceParams;
 
         /**
-         * Decodes a TxSize message from the specified reader or buffer, length delimited.
+         * Decodes an EvidenceParams message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns TxSize
+         * @returns EvidenceParams
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): abci.TxSize;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): abci.EvidenceParams;
 
         /**
-         * Verifies a TxSize message.
+         * Verifies an EvidenceParams message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a TxSize message from a plain object. Also converts values to their respective internal types.
+         * Creates an EvidenceParams message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns TxSize
+         * @returns EvidenceParams
          */
-        public static fromObject(object: { [k: string]: any }): abci.TxSize;
+        public static fromObject(object: { [k: string]: any }): abci.EvidenceParams;
 
         /**
-         * Creates a plain object from a TxSize message. Also converts values to other types if specified.
-         * @param message TxSize
+         * Creates a plain object from an EvidenceParams message. Also converts values to other types if specified.
+         * @param message EvidenceParams
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: abci.TxSize, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: abci.EvidenceParams, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this TxSize to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a BlockGossip. */
-    interface IBlockGossip {
-
-        /** BlockGossip blockPartSizeBytes */
-        blockPartSizeBytes?: (number|null);
-    }
-
-    /** Represents a BlockGossip. */
-    class BlockGossip implements IBlockGossip {
-
-        /**
-         * Constructs a new BlockGossip.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: abci.IBlockGossip);
-
-        /** BlockGossip blockPartSizeBytes. */
-        public blockPartSizeBytes: number;
-
-        /**
-         * Creates a new BlockGossip instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns BlockGossip instance
-         */
-        public static create(properties?: abci.IBlockGossip): abci.BlockGossip;
-
-        /**
-         * Encodes the specified BlockGossip message. Does not implicitly {@link abci.BlockGossip.verify|verify} messages.
-         * @param message BlockGossip message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: abci.IBlockGossip, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified BlockGossip message, length delimited. Does not implicitly {@link abci.BlockGossip.verify|verify} messages.
-         * @param message BlockGossip message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: abci.IBlockGossip, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a BlockGossip message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns BlockGossip
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): abci.BlockGossip;
-
-        /**
-         * Decodes a BlockGossip message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns BlockGossip
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): abci.BlockGossip;
-
-        /**
-         * Verifies a BlockGossip message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a BlockGossip message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns BlockGossip
-         */
-        public static fromObject(object: { [k: string]: any }): abci.BlockGossip;
-
-        /**
-         * Creates a plain object from a BlockGossip message. Also converts values to other types if specified.
-         * @param message BlockGossip
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: abci.BlockGossip, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this BlockGossip to JSON.
+         * Converts this EvidenceParams to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -4111,6 +4201,20 @@ export namespace abci {
          * @returns Promise
          */
         public endBlock(request: abci.IRequestEndBlock): Promise<abci.ResponseEndBlock>;
+
+        /**
+         * Calls CheckBridge.
+         * @param request RequestCheckBridge message or plain object
+         * @param callback Node-style callback called with the error, if any, and ResponseCheckBridge
+         */
+        public checkBridge(request: abci.IRequestCheckBridge, callback: abci.ABCIApplication.CheckBridgeCallback): void;
+
+        /**
+         * Calls CheckBridge.
+         * @param request RequestCheckBridge message or plain object
+         * @returns Promise
+         */
+        public checkBridge(request: abci.IRequestCheckBridge): Promise<abci.ResponseCheckBridge>;
     }
 
     namespace ABCIApplication {
@@ -4191,6 +4295,13 @@ export namespace abci {
          * @param [response] ResponseEndBlock
          */
         type EndBlockCallback = (error: (Error|null), response?: abci.ResponseEndBlock) => void;
+
+        /**
+         * Callback as used by {@link abci.ABCIApplication#checkBridge}.
+         * @param error Error, if any
+         * @param [response] ResponseCheckBridge
+         */
+        type CheckBridgeCallback = (error: (Error|null), response?: abci.ResponseCheckBridge) => void;
     }
 }
 

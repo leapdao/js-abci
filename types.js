@@ -35,6 +35,7 @@ $root.abci = (function() {
          * @property {abci.IRequestDeliverTx|null} [deliverTx] Request deliverTx
          * @property {abci.IRequestEndBlock|null} [endBlock] Request endBlock
          * @property {abci.IRequestCommit|null} [commit] Request commit
+         * @property {abci.IRequestCheckBridge|null} [checkBridge] Request checkBridge
          */
 
         /**
@@ -140,17 +141,25 @@ $root.abci = (function() {
          */
         Request.prototype.commit = null;
 
+        /**
+         * Request checkBridge.
+         * @member {abci.IRequestCheckBridge|null|undefined} checkBridge
+         * @memberof abci.Request
+         * @instance
+         */
+        Request.prototype.checkBridge = null;
+
         // OneOf field names bound to virtual getters and setters
         var $oneOfFields;
 
         /**
          * Request value.
-         * @member {"echo"|"flush"|"info"|"setOption"|"initChain"|"query"|"beginBlock"|"checkTx"|"deliverTx"|"endBlock"|"commit"|undefined} value
+         * @member {"echo"|"flush"|"info"|"setOption"|"initChain"|"query"|"beginBlock"|"checkTx"|"deliverTx"|"endBlock"|"commit"|"checkBridge"|undefined} value
          * @memberof abci.Request
          * @instance
          */
         Object.defineProperty(Request.prototype, "value", {
-            get: $util.oneOfGetter($oneOfFields = ["echo", "flush", "info", "setOption", "initChain", "query", "beginBlock", "checkTx", "deliverTx", "endBlock", "commit"]),
+            get: $util.oneOfGetter($oneOfFields = ["echo", "flush", "info", "setOption", "initChain", "query", "beginBlock", "checkTx", "deliverTx", "endBlock", "commit", "checkBridge"]),
             set: $util.oneOfSetter($oneOfFields)
         });
 
@@ -198,6 +207,8 @@ $root.abci = (function() {
                 $root.abci.RequestEndBlock.encode(message.endBlock, writer.uint32(/* id 11, wireType 2 =*/90).fork()).ldelim();
             if (message.commit != null && message.hasOwnProperty("commit"))
                 $root.abci.RequestCommit.encode(message.commit, writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
+            if (message.checkBridge != null && message.hasOwnProperty("checkBridge"))
+                $root.abci.RequestCheckBridge.encode(message.checkBridge, writer.uint32(/* id 13, wireType 2 =*/106).fork()).ldelim();
             if (message.deliverTx != null && message.hasOwnProperty("deliverTx"))
                 $root.abci.RequestDeliverTx.encode(message.deliverTx, writer.uint32(/* id 19, wireType 2 =*/154).fork()).ldelim();
             return writer;
@@ -266,6 +277,9 @@ $root.abci = (function() {
                     break;
                 case 12:
                     message.commit = $root.abci.RequestCommit.decode(reader, reader.uint32());
+                    break;
+                case 13:
+                    message.checkBridge = $root.abci.RequestCheckBridge.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -411,6 +425,16 @@ $root.abci = (function() {
                         return "commit." + error;
                 }
             }
+            if (message.checkBridge != null && message.hasOwnProperty("checkBridge")) {
+                if (properties.value === 1)
+                    return "value: multiple values";
+                properties.value = 1;
+                {
+                    var error = $root.abci.RequestCheckBridge.verify(message.checkBridge);
+                    if (error)
+                        return "checkBridge." + error;
+                }
+            }
             return null;
         };
 
@@ -481,6 +505,11 @@ $root.abci = (function() {
                     throw TypeError(".abci.Request.commit: object expected");
                 message.commit = $root.abci.RequestCommit.fromObject(object.commit);
             }
+            if (object.checkBridge != null) {
+                if (typeof object.checkBridge !== "object")
+                    throw TypeError(".abci.Request.checkBridge: object expected");
+                message.checkBridge = $root.abci.RequestCheckBridge.fromObject(object.checkBridge);
+            }
             return message;
         };
 
@@ -546,6 +575,11 @@ $root.abci = (function() {
                 object.commit = $root.abci.RequestCommit.toObject(message.commit, options);
                 if (options.oneofs)
                     object.value = "commit";
+            }
+            if (message.checkBridge != null && message.hasOwnProperty("checkBridge")) {
+                object.checkBridge = $root.abci.RequestCheckBridge.toObject(message.checkBridge, options);
+                if (options.oneofs)
+                    object.value = "checkBridge";
             }
             if (message.deliverTx != null && message.hasOwnProperty("deliverTx")) {
                 object.deliverTx = $root.abci.RequestDeliverTx.toObject(message.deliverTx, options);
@@ -1679,7 +1713,7 @@ $root.abci = (function() {
          * @memberof abci.RequestQuery
          * @instance
          */
-        RequestQuery.prototype.height = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        RequestQuery.prototype.height = 0;
 
         /**
          * RequestQuery prove.
@@ -1872,11 +1906,7 @@ $root.abci = (function() {
                         object.data = $util.newBuffer(object.data);
                 }
                 object.path = "";
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.height = options.longs === String ? "0" : 0;
+                object.height = 0;
                 object.prove = false;
             }
             if (message.data != null && message.hasOwnProperty("data"))
@@ -2624,7 +2654,7 @@ $root.abci = (function() {
          * @memberof abci.RequestEndBlock
          * @instance
          */
-        RequestEndBlock.prototype.height = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        RequestEndBlock.prototype.height = 0;
 
         /**
          * Creates a new RequestEndBlock instance using the specified properties.
@@ -2768,11 +2798,7 @@ $root.abci = (function() {
                 options = {};
             var object = {};
             if (options.defaults)
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.height = options.longs === String ? "0" : 0;
+                object.height = 0;
             if (message.height != null && message.hasOwnProperty("height"))
                 if (typeof message.height === "number")
                     object.height = options.longs === String ? String(message.height) : message.height;
@@ -2955,6 +2981,193 @@ $root.abci = (function() {
         return RequestCommit;
     })();
 
+    abci.RequestCheckBridge = (function() {
+
+        /**
+         * Properties of a RequestCheckBridge.
+         * @memberof abci
+         * @interface IRequestCheckBridge
+         * @property {number|null} [height] RequestCheckBridge height
+         */
+
+        /**
+         * Constructs a new RequestCheckBridge.
+         * @memberof abci
+         * @classdesc Represents a RequestCheckBridge.
+         * @implements IRequestCheckBridge
+         * @constructor
+         * @param {abci.IRequestCheckBridge=} [properties] Properties to set
+         */
+        function RequestCheckBridge(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RequestCheckBridge height.
+         * @member {number} height
+         * @memberof abci.RequestCheckBridge
+         * @instance
+         */
+        RequestCheckBridge.prototype.height = 0;
+
+        /**
+         * Creates a new RequestCheckBridge instance using the specified properties.
+         * @function create
+         * @memberof abci.RequestCheckBridge
+         * @static
+         * @param {abci.IRequestCheckBridge=} [properties] Properties to set
+         * @returns {abci.RequestCheckBridge} RequestCheckBridge instance
+         */
+        RequestCheckBridge.create = function create(properties) {
+            return new RequestCheckBridge(properties);
+        };
+
+        /**
+         * Encodes the specified RequestCheckBridge message. Does not implicitly {@link abci.RequestCheckBridge.verify|verify} messages.
+         * @function encode
+         * @memberof abci.RequestCheckBridge
+         * @static
+         * @param {abci.IRequestCheckBridge} message RequestCheckBridge message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RequestCheckBridge.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.height != null && message.hasOwnProperty("height"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.height);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RequestCheckBridge message, length delimited. Does not implicitly {@link abci.RequestCheckBridge.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof abci.RequestCheckBridge
+         * @static
+         * @param {abci.IRequestCheckBridge} message RequestCheckBridge message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RequestCheckBridge.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RequestCheckBridge message from the specified reader or buffer.
+         * @function decode
+         * @memberof abci.RequestCheckBridge
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {abci.RequestCheckBridge} RequestCheckBridge
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RequestCheckBridge.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.abci.RequestCheckBridge();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.height = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RequestCheckBridge message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof abci.RequestCheckBridge
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {abci.RequestCheckBridge} RequestCheckBridge
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RequestCheckBridge.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RequestCheckBridge message.
+         * @function verify
+         * @memberof abci.RequestCheckBridge
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RequestCheckBridge.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.height != null && message.hasOwnProperty("height"))
+                if (!$util.isInteger(message.height))
+                    return "height: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a RequestCheckBridge message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof abci.RequestCheckBridge
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {abci.RequestCheckBridge} RequestCheckBridge
+         */
+        RequestCheckBridge.fromObject = function fromObject(object) {
+            if (object instanceof $root.abci.RequestCheckBridge)
+                return object;
+            var message = new $root.abci.RequestCheckBridge();
+            if (object.height != null)
+                message.height = object.height | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RequestCheckBridge message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof abci.RequestCheckBridge
+         * @static
+         * @param {abci.RequestCheckBridge} message RequestCheckBridge
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RequestCheckBridge.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.height = 0;
+            if (message.height != null && message.hasOwnProperty("height"))
+                object.height = message.height;
+            return object;
+        };
+
+        /**
+         * Converts this RequestCheckBridge to JSON.
+         * @function toJSON
+         * @memberof abci.RequestCheckBridge
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RequestCheckBridge.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return RequestCheckBridge;
+    })();
+
     abci.Response = (function() {
 
         /**
@@ -2973,6 +3186,7 @@ $root.abci = (function() {
          * @property {abci.IResponseDeliverTx|null} [deliverTx] Response deliverTx
          * @property {abci.IResponseEndBlock|null} [endBlock] Response endBlock
          * @property {abci.IResponseCommit|null} [commit] Response commit
+         * @property {abci.IResponseCheckBridge|null} [checkBridge] Response checkBridge
          */
 
         /**
@@ -3086,17 +3300,25 @@ $root.abci = (function() {
          */
         Response.prototype.commit = null;
 
+        /**
+         * Response checkBridge.
+         * @member {abci.IResponseCheckBridge|null|undefined} checkBridge
+         * @memberof abci.Response
+         * @instance
+         */
+        Response.prototype.checkBridge = null;
+
         // OneOf field names bound to virtual getters and setters
         var $oneOfFields;
 
         /**
          * Response value.
-         * @member {"exception"|"echo"|"flush"|"info"|"setOption"|"initChain"|"query"|"beginBlock"|"checkTx"|"deliverTx"|"endBlock"|"commit"|undefined} value
+         * @member {"exception"|"echo"|"flush"|"info"|"setOption"|"initChain"|"query"|"beginBlock"|"checkTx"|"deliverTx"|"endBlock"|"commit"|"checkBridge"|undefined} value
          * @memberof abci.Response
          * @instance
          */
         Object.defineProperty(Response.prototype, "value", {
-            get: $util.oneOfGetter($oneOfFields = ["exception", "echo", "flush", "info", "setOption", "initChain", "query", "beginBlock", "checkTx", "deliverTx", "endBlock", "commit"]),
+            get: $util.oneOfGetter($oneOfFields = ["exception", "echo", "flush", "info", "setOption", "initChain", "query", "beginBlock", "checkTx", "deliverTx", "endBlock", "commit", "checkBridge"]),
             set: $util.oneOfSetter($oneOfFields)
         });
 
@@ -3148,6 +3370,8 @@ $root.abci = (function() {
                 $root.abci.ResponseEndBlock.encode(message.endBlock, writer.uint32(/* id 11, wireType 2 =*/90).fork()).ldelim();
             if (message.commit != null && message.hasOwnProperty("commit"))
                 $root.abci.ResponseCommit.encode(message.commit, writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
+            if (message.checkBridge != null && message.hasOwnProperty("checkBridge"))
+                $root.abci.ResponseCheckBridge.encode(message.checkBridge, writer.uint32(/* id 13, wireType 2 =*/106).fork()).ldelim();
             return writer;
         };
 
@@ -3217,6 +3441,9 @@ $root.abci = (function() {
                     break;
                 case 12:
                     message.commit = $root.abci.ResponseCommit.decode(reader, reader.uint32());
+                    break;
+                case 13:
+                    message.checkBridge = $root.abci.ResponseCheckBridge.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -3372,6 +3599,16 @@ $root.abci = (function() {
                         return "commit." + error;
                 }
             }
+            if (message.checkBridge != null && message.hasOwnProperty("checkBridge")) {
+                if (properties.value === 1)
+                    return "value: multiple values";
+                properties.value = 1;
+                {
+                    var error = $root.abci.ResponseCheckBridge.verify(message.checkBridge);
+                    if (error)
+                        return "checkBridge." + error;
+                }
+            }
             return null;
         };
 
@@ -3446,6 +3683,11 @@ $root.abci = (function() {
                 if (typeof object.commit !== "object")
                     throw TypeError(".abci.Response.commit: object expected");
                 message.commit = $root.abci.ResponseCommit.fromObject(object.commit);
+            }
+            if (object.checkBridge != null) {
+                if (typeof object.checkBridge !== "object")
+                    throw TypeError(".abci.Response.checkBridge: object expected");
+                message.checkBridge = $root.abci.ResponseCheckBridge.fromObject(object.checkBridge);
             }
             return message;
         };
@@ -3522,6 +3764,11 @@ $root.abci = (function() {
                 object.commit = $root.abci.ResponseCommit.toObject(message.commit, options);
                 if (options.oneofs)
                     object.value = "commit";
+            }
+            if (message.checkBridge != null && message.hasOwnProperty("checkBridge")) {
+                object.checkBridge = $root.abci.ResponseCheckBridge.toObject(message.checkBridge, options);
+                if (options.oneofs)
+                    object.value = "checkBridge";
             }
             return object;
         };
@@ -4123,7 +4370,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseInfo
          * @instance
          */
-        ResponseInfo.prototype.lastBlockHeight = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        ResponseInfo.prototype.lastBlockHeight = 0;
 
         /**
          * ResponseInfo lastBlockAppHash.
@@ -4310,11 +4557,7 @@ $root.abci = (function() {
             if (options.defaults) {
                 object.data = "";
                 object.version = "";
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.lastBlockHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.lastBlockHeight = options.longs === String ? "0" : 0;
+                object.lastBlockHeight = 0;
                 if (options.bytes === String)
                     object.lastBlockAppHash = "";
                 else {
@@ -4880,7 +5123,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseQuery
          * @instance
          */
-        ResponseQuery.prototype.index = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        ResponseQuery.prototype.index = 0;
 
         /**
          * ResponseQuery key.
@@ -4912,7 +5155,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseQuery
          * @instance
          */
-        ResponseQuery.prototype.height = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        ResponseQuery.prototype.height = 0;
 
         /**
          * Creates a new ResponseQuery instance using the specified properties.
@@ -5145,11 +5388,7 @@ $root.abci = (function() {
                 object.code = 0;
                 object.log = "";
                 object.info = "";
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.index = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.index = options.longs === String ? "0" : 0;
+                object.index = 0;
                 if (options.bytes === String)
                     object.key = "";
                 else {
@@ -5171,11 +5410,7 @@ $root.abci = (function() {
                     if (options.bytes !== Array)
                         object.proof = $util.newBuffer(object.proof);
                 }
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.height = options.longs === String ? "0" : 0;
+                object.height = 0;
             }
             if (message.code != null && message.hasOwnProperty("code"))
                 object.code = message.code;
@@ -5493,7 +5728,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseCheckTx
          * @instance
          */
-        ResponseCheckTx.prototype.gasWanted = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        ResponseCheckTx.prototype.gasWanted = 0;
 
         /**
          * ResponseCheckTx gasUsed.
@@ -5501,7 +5736,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseCheckTx
          * @instance
          */
-        ResponseCheckTx.prototype.gasUsed = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        ResponseCheckTx.prototype.gasUsed = 0;
 
         /**
          * ResponseCheckTx tags.
@@ -5752,16 +5987,8 @@ $root.abci = (function() {
                 }
                 object.log = "";
                 object.info = "";
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.gasWanted = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.gasWanted = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.gasUsed = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.gasUsed = options.longs === String ? "0" : 0;
+                object.gasWanted = 0;
+                object.gasUsed = 0;
             }
             if (message.code != null && message.hasOwnProperty("code"))
                 object.code = message.code;
@@ -5872,7 +6099,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseDeliverTx
          * @instance
          */
-        ResponseDeliverTx.prototype.gasWanted = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        ResponseDeliverTx.prototype.gasWanted = 0;
 
         /**
          * ResponseDeliverTx gasUsed.
@@ -5880,7 +6107,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseDeliverTx
          * @instance
          */
-        ResponseDeliverTx.prototype.gasUsed = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        ResponseDeliverTx.prototype.gasUsed = 0;
 
         /**
          * ResponseDeliverTx tags.
@@ -6131,16 +6358,8 @@ $root.abci = (function() {
                 }
                 object.log = "";
                 object.info = "";
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.gasWanted = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.gasWanted = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.gasUsed = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.gasUsed = options.longs === String ? "0" : 0;
+                object.gasWanted = 0;
+                object.gasUsed = 0;
             }
             if (message.code != null && message.hasOwnProperty("code"))
                 object.code = message.code;
@@ -6658,6 +6877,193 @@ $root.abci = (function() {
         return ResponseCommit;
     })();
 
+    abci.ResponseCheckBridge = (function() {
+
+        /**
+         * Properties of a ResponseCheckBridge.
+         * @memberof abci
+         * @interface IResponseCheckBridge
+         * @property {number|null} [status] ResponseCheckBridge status
+         */
+
+        /**
+         * Constructs a new ResponseCheckBridge.
+         * @memberof abci
+         * @classdesc Represents a ResponseCheckBridge.
+         * @implements IResponseCheckBridge
+         * @constructor
+         * @param {abci.IResponseCheckBridge=} [properties] Properties to set
+         */
+        function ResponseCheckBridge(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ResponseCheckBridge status.
+         * @member {number} status
+         * @memberof abci.ResponseCheckBridge
+         * @instance
+         */
+        ResponseCheckBridge.prototype.status = 0;
+
+        /**
+         * Creates a new ResponseCheckBridge instance using the specified properties.
+         * @function create
+         * @memberof abci.ResponseCheckBridge
+         * @static
+         * @param {abci.IResponseCheckBridge=} [properties] Properties to set
+         * @returns {abci.ResponseCheckBridge} ResponseCheckBridge instance
+         */
+        ResponseCheckBridge.create = function create(properties) {
+            return new ResponseCheckBridge(properties);
+        };
+
+        /**
+         * Encodes the specified ResponseCheckBridge message. Does not implicitly {@link abci.ResponseCheckBridge.verify|verify} messages.
+         * @function encode
+         * @memberof abci.ResponseCheckBridge
+         * @static
+         * @param {abci.IResponseCheckBridge} message ResponseCheckBridge message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ResponseCheckBridge.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.status != null && message.hasOwnProperty("status"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.status);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ResponseCheckBridge message, length delimited. Does not implicitly {@link abci.ResponseCheckBridge.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof abci.ResponseCheckBridge
+         * @static
+         * @param {abci.IResponseCheckBridge} message ResponseCheckBridge message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ResponseCheckBridge.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ResponseCheckBridge message from the specified reader or buffer.
+         * @function decode
+         * @memberof abci.ResponseCheckBridge
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {abci.ResponseCheckBridge} ResponseCheckBridge
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ResponseCheckBridge.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.abci.ResponseCheckBridge();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.status = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ResponseCheckBridge message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof abci.ResponseCheckBridge
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {abci.ResponseCheckBridge} ResponseCheckBridge
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ResponseCheckBridge.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ResponseCheckBridge message.
+         * @function verify
+         * @memberof abci.ResponseCheckBridge
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ResponseCheckBridge.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.status != null && message.hasOwnProperty("status"))
+                if (!$util.isInteger(message.status))
+                    return "status: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a ResponseCheckBridge message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof abci.ResponseCheckBridge
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {abci.ResponseCheckBridge} ResponseCheckBridge
+         */
+        ResponseCheckBridge.fromObject = function fromObject(object) {
+            if (object instanceof $root.abci.ResponseCheckBridge)
+                return object;
+            var message = new $root.abci.ResponseCheckBridge();
+            if (object.status != null)
+                message.status = object.status >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ResponseCheckBridge message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof abci.ResponseCheckBridge
+         * @static
+         * @param {abci.ResponseCheckBridge} message ResponseCheckBridge
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ResponseCheckBridge.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.status = 0;
+            if (message.status != null && message.hasOwnProperty("status"))
+                object.status = message.status;
+            return object;
+        };
+
+        /**
+         * Converts this ResponseCheckBridge to JSON.
+         * @function toJSON
+         * @memberof abci.ResponseCheckBridge
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ResponseCheckBridge.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ResponseCheckBridge;
+    })();
+
     abci.ConsensusParams = (function() {
 
         /**
@@ -6665,8 +7071,7 @@ $root.abci = (function() {
          * @memberof abci
          * @interface IConsensusParams
          * @property {abci.IBlockSize|null} [blockSize] ConsensusParams blockSize
-         * @property {abci.ITxSize|null} [txSize] ConsensusParams txSize
-         * @property {abci.IBlockGossip|null} [blockGossip] ConsensusParams blockGossip
+         * @property {abci.IEvidenceParams|null} [evidenceParams] ConsensusParams evidenceParams
          */
 
         /**
@@ -6693,20 +7098,12 @@ $root.abci = (function() {
         ConsensusParams.prototype.blockSize = null;
 
         /**
-         * ConsensusParams txSize.
-         * @member {abci.ITxSize|null|undefined} txSize
+         * ConsensusParams evidenceParams.
+         * @member {abci.IEvidenceParams|null|undefined} evidenceParams
          * @memberof abci.ConsensusParams
          * @instance
          */
-        ConsensusParams.prototype.txSize = null;
-
-        /**
-         * ConsensusParams blockGossip.
-         * @member {abci.IBlockGossip|null|undefined} blockGossip
-         * @memberof abci.ConsensusParams
-         * @instance
-         */
-        ConsensusParams.prototype.blockGossip = null;
+        ConsensusParams.prototype.evidenceParams = null;
 
         /**
          * Creates a new ConsensusParams instance using the specified properties.
@@ -6734,10 +7131,8 @@ $root.abci = (function() {
                 writer = $Writer.create();
             if (message.blockSize != null && message.hasOwnProperty("blockSize"))
                 $root.abci.BlockSize.encode(message.blockSize, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
-            if (message.txSize != null && message.hasOwnProperty("txSize"))
-                $root.abci.TxSize.encode(message.txSize, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-            if (message.blockGossip != null && message.hasOwnProperty("blockGossip"))
-                $root.abci.BlockGossip.encode(message.blockGossip, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.evidenceParams != null && message.hasOwnProperty("evidenceParams"))
+                $root.abci.EvidenceParams.encode(message.evidenceParams, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             return writer;
         };
 
@@ -6776,10 +7171,7 @@ $root.abci = (function() {
                     message.blockSize = $root.abci.BlockSize.decode(reader, reader.uint32());
                     break;
                 case 2:
-                    message.txSize = $root.abci.TxSize.decode(reader, reader.uint32());
-                    break;
-                case 3:
-                    message.blockGossip = $root.abci.BlockGossip.decode(reader, reader.uint32());
+                    message.evidenceParams = $root.abci.EvidenceParams.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -6821,15 +7213,10 @@ $root.abci = (function() {
                 if (error)
                     return "blockSize." + error;
             }
-            if (message.txSize != null && message.hasOwnProperty("txSize")) {
-                var error = $root.abci.TxSize.verify(message.txSize);
+            if (message.evidenceParams != null && message.hasOwnProperty("evidenceParams")) {
+                var error = $root.abci.EvidenceParams.verify(message.evidenceParams);
                 if (error)
-                    return "txSize." + error;
-            }
-            if (message.blockGossip != null && message.hasOwnProperty("blockGossip")) {
-                var error = $root.abci.BlockGossip.verify(message.blockGossip);
-                if (error)
-                    return "blockGossip." + error;
+                    return "evidenceParams." + error;
             }
             return null;
         };
@@ -6851,15 +7238,10 @@ $root.abci = (function() {
                     throw TypeError(".abci.ConsensusParams.blockSize: object expected");
                 message.blockSize = $root.abci.BlockSize.fromObject(object.blockSize);
             }
-            if (object.txSize != null) {
-                if (typeof object.txSize !== "object")
-                    throw TypeError(".abci.ConsensusParams.txSize: object expected");
-                message.txSize = $root.abci.TxSize.fromObject(object.txSize);
-            }
-            if (object.blockGossip != null) {
-                if (typeof object.blockGossip !== "object")
-                    throw TypeError(".abci.ConsensusParams.blockGossip: object expected");
-                message.blockGossip = $root.abci.BlockGossip.fromObject(object.blockGossip);
+            if (object.evidenceParams != null) {
+                if (typeof object.evidenceParams !== "object")
+                    throw TypeError(".abci.ConsensusParams.evidenceParams: object expected");
+                message.evidenceParams = $root.abci.EvidenceParams.fromObject(object.evidenceParams);
             }
             return message;
         };
@@ -6879,15 +7261,12 @@ $root.abci = (function() {
             var object = {};
             if (options.defaults) {
                 object.blockSize = null;
-                object.txSize = null;
-                object.blockGossip = null;
+                object.evidenceParams = null;
             }
             if (message.blockSize != null && message.hasOwnProperty("blockSize"))
                 object.blockSize = $root.abci.BlockSize.toObject(message.blockSize, options);
-            if (message.txSize != null && message.hasOwnProperty("txSize"))
-                object.txSize = $root.abci.TxSize.toObject(message.txSize, options);
-            if (message.blockGossip != null && message.hasOwnProperty("blockGossip"))
-                object.blockGossip = $root.abci.BlockGossip.toObject(message.blockGossip, options);
+            if (message.evidenceParams != null && message.hasOwnProperty("evidenceParams"))
+                object.evidenceParams = $root.abci.EvidenceParams.toObject(message.evidenceParams, options);
             return object;
         };
 
@@ -6911,7 +7290,7 @@ $root.abci = (function() {
          * Properties of a BlockSize.
          * @memberof abci
          * @interface IBlockSize
-         * @property {number|null} [maxBytes] BlockSize maxBytes
+         * @property {number|Long|null} [maxBytes] BlockSize maxBytes
          * @property {number|Long|null} [maxGas] BlockSize maxGas
          */
 
@@ -6932,7 +7311,7 @@ $root.abci = (function() {
 
         /**
          * BlockSize maxBytes.
-         * @member {number} maxBytes
+         * @member {number|Long} maxBytes
          * @memberof abci.BlockSize
          * @instance
          */
@@ -6944,7 +7323,7 @@ $root.abci = (function() {
          * @memberof abci.BlockSize
          * @instance
          */
-        BlockSize.prototype.maxGas = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        BlockSize.prototype.maxGas = 0;
 
         /**
          * Creates a new BlockSize instance using the specified properties.
@@ -6971,7 +7350,7 @@ $root.abci = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.maxBytes != null && message.hasOwnProperty("maxBytes"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.maxBytes);
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.maxBytes);
             if (message.maxGas != null && message.hasOwnProperty("maxGas"))
                 writer.uint32(/* id 2, wireType 0 =*/16).int64(message.maxGas);
             return writer;
@@ -7009,7 +7388,7 @@ $root.abci = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.maxBytes = reader.int32();
+                    message.maxBytes = reader.int64();
                     break;
                 case 2:
                     message.maxGas = reader.int64();
@@ -7050,8 +7429,8 @@ $root.abci = (function() {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.maxBytes != null && message.hasOwnProperty("maxBytes"))
-                if (!$util.isInteger(message.maxBytes))
-                    return "maxBytes: integer expected";
+                if (!$util.isInteger(message.maxBytes) && !(message.maxBytes && $util.isInteger(message.maxBytes.low) && $util.isInteger(message.maxBytes.high)))
+                    return "maxBytes: integer|Long expected";
             if (message.maxGas != null && message.hasOwnProperty("maxGas"))
                 if (!$util.isInteger(message.maxGas) && !(message.maxGas && $util.isInteger(message.maxGas.low) && $util.isInteger(message.maxGas.high)))
                     return "maxGas: integer|Long expected";
@@ -7071,7 +7450,14 @@ $root.abci = (function() {
                 return object;
             var message = new $root.abci.BlockSize();
             if (object.maxBytes != null)
-                message.maxBytes = object.maxBytes | 0;
+                if ($util.Long)
+                    (message.maxBytes = $util.Long.fromValue(object.maxBytes)).unsigned = false;
+                else if (typeof object.maxBytes === "string")
+                    message.maxBytes = parseInt(object.maxBytes, 10);
+                else if (typeof object.maxBytes === "number")
+                    message.maxBytes = object.maxBytes;
+                else if (typeof object.maxBytes === "object")
+                    message.maxBytes = new $util.LongBits(object.maxBytes.low >>> 0, object.maxBytes.high >>> 0).toNumber();
             if (object.maxGas != null)
                 if ($util.Long)
                     (message.maxGas = $util.Long.fromValue(object.maxGas)).unsigned = false;
@@ -7099,14 +7485,13 @@ $root.abci = (function() {
             var object = {};
             if (options.defaults) {
                 object.maxBytes = 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.maxGas = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.maxGas = options.longs === String ? "0" : 0;
+                object.maxGas = 0;
             }
             if (message.maxBytes != null && message.hasOwnProperty("maxBytes"))
-                object.maxBytes = message.maxBytes;
+                if (typeof message.maxBytes === "number")
+                    object.maxBytes = options.longs === String ? String(message.maxBytes) : message.maxBytes;
+                else
+                    object.maxBytes = options.longs === String ? $util.Long.prototype.toString.call(message.maxBytes) : options.longs === Number ? new $util.LongBits(message.maxBytes.low >>> 0, message.maxBytes.high >>> 0).toNumber() : message.maxBytes;
             if (message.maxGas != null && message.hasOwnProperty("maxGas"))
                 if (typeof message.maxGas === "number")
                     object.maxGas = options.longs === String ? String(message.maxGas) : message.maxGas;
@@ -7129,25 +7514,24 @@ $root.abci = (function() {
         return BlockSize;
     })();
 
-    abci.TxSize = (function() {
+    abci.EvidenceParams = (function() {
 
         /**
-         * Properties of a TxSize.
+         * Properties of an EvidenceParams.
          * @memberof abci
-         * @interface ITxSize
-         * @property {number|null} [maxBytes] TxSize maxBytes
-         * @property {number|Long|null} [maxGas] TxSize maxGas
+         * @interface IEvidenceParams
+         * @property {number|Long|null} [maxAge] EvidenceParams maxAge
          */
 
         /**
-         * Constructs a new TxSize.
+         * Constructs a new EvidenceParams.
          * @memberof abci
-         * @classdesc Represents a TxSize.
-         * @implements ITxSize
+         * @classdesc Represents an EvidenceParams.
+         * @implements IEvidenceParams
          * @constructor
-         * @param {abci.ITxSize=} [properties] Properties to set
+         * @param {abci.IEvidenceParams=} [properties] Properties to set
          */
-        function TxSize(properties) {
+        function EvidenceParams(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -7155,88 +7539,75 @@ $root.abci = (function() {
         }
 
         /**
-         * TxSize maxBytes.
-         * @member {number} maxBytes
-         * @memberof abci.TxSize
+         * EvidenceParams maxAge.
+         * @member {number|Long} maxAge
+         * @memberof abci.EvidenceParams
          * @instance
          */
-        TxSize.prototype.maxBytes = 0;
+        EvidenceParams.prototype.maxAge = 0;
 
         /**
-         * TxSize maxGas.
-         * @member {number|Long} maxGas
-         * @memberof abci.TxSize
-         * @instance
-         */
-        TxSize.prototype.maxGas = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * Creates a new TxSize instance using the specified properties.
+         * Creates a new EvidenceParams instance using the specified properties.
          * @function create
-         * @memberof abci.TxSize
+         * @memberof abci.EvidenceParams
          * @static
-         * @param {abci.ITxSize=} [properties] Properties to set
-         * @returns {abci.TxSize} TxSize instance
+         * @param {abci.IEvidenceParams=} [properties] Properties to set
+         * @returns {abci.EvidenceParams} EvidenceParams instance
          */
-        TxSize.create = function create(properties) {
-            return new TxSize(properties);
+        EvidenceParams.create = function create(properties) {
+            return new EvidenceParams(properties);
         };
 
         /**
-         * Encodes the specified TxSize message. Does not implicitly {@link abci.TxSize.verify|verify} messages.
+         * Encodes the specified EvidenceParams message. Does not implicitly {@link abci.EvidenceParams.verify|verify} messages.
          * @function encode
-         * @memberof abci.TxSize
+         * @memberof abci.EvidenceParams
          * @static
-         * @param {abci.ITxSize} message TxSize message or plain object to encode
+         * @param {abci.IEvidenceParams} message EvidenceParams message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        TxSize.encode = function encode(message, writer) {
+        EvidenceParams.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.maxBytes != null && message.hasOwnProperty("maxBytes"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.maxBytes);
-            if (message.maxGas != null && message.hasOwnProperty("maxGas"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.maxGas);
+            if (message.maxAge != null && message.hasOwnProperty("maxAge"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.maxAge);
             return writer;
         };
 
         /**
-         * Encodes the specified TxSize message, length delimited. Does not implicitly {@link abci.TxSize.verify|verify} messages.
+         * Encodes the specified EvidenceParams message, length delimited. Does not implicitly {@link abci.EvidenceParams.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof abci.TxSize
+         * @memberof abci.EvidenceParams
          * @static
-         * @param {abci.ITxSize} message TxSize message or plain object to encode
+         * @param {abci.IEvidenceParams} message EvidenceParams message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        TxSize.encodeDelimited = function encodeDelimited(message, writer) {
+        EvidenceParams.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a TxSize message from the specified reader or buffer.
+         * Decodes an EvidenceParams message from the specified reader or buffer.
          * @function decode
-         * @memberof abci.TxSize
+         * @memberof abci.EvidenceParams
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {abci.TxSize} TxSize
+         * @returns {abci.EvidenceParams} EvidenceParams
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        TxSize.decode = function decode(reader, length) {
+        EvidenceParams.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.abci.TxSize();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.abci.EvidenceParams();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.maxBytes = reader.int32();
-                    break;
-                case 2:
-                    message.maxGas = reader.int64();
+                    message.maxAge = reader.int64();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -7247,297 +7618,97 @@ $root.abci = (function() {
         };
 
         /**
-         * Decodes a TxSize message from the specified reader or buffer, length delimited.
+         * Decodes an EvidenceParams message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof abci.TxSize
+         * @memberof abci.EvidenceParams
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {abci.TxSize} TxSize
+         * @returns {abci.EvidenceParams} EvidenceParams
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        TxSize.decodeDelimited = function decodeDelimited(reader) {
+        EvidenceParams.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a TxSize message.
+         * Verifies an EvidenceParams message.
          * @function verify
-         * @memberof abci.TxSize
+         * @memberof abci.EvidenceParams
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        TxSize.verify = function verify(message) {
+        EvidenceParams.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.maxBytes != null && message.hasOwnProperty("maxBytes"))
-                if (!$util.isInteger(message.maxBytes))
-                    return "maxBytes: integer expected";
-            if (message.maxGas != null && message.hasOwnProperty("maxGas"))
-                if (!$util.isInteger(message.maxGas) && !(message.maxGas && $util.isInteger(message.maxGas.low) && $util.isInteger(message.maxGas.high)))
-                    return "maxGas: integer|Long expected";
+            if (message.maxAge != null && message.hasOwnProperty("maxAge"))
+                if (!$util.isInteger(message.maxAge) && !(message.maxAge && $util.isInteger(message.maxAge.low) && $util.isInteger(message.maxAge.high)))
+                    return "maxAge: integer|Long expected";
             return null;
         };
 
         /**
-         * Creates a TxSize message from a plain object. Also converts values to their respective internal types.
+         * Creates an EvidenceParams message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof abci.TxSize
+         * @memberof abci.EvidenceParams
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {abci.TxSize} TxSize
+         * @returns {abci.EvidenceParams} EvidenceParams
          */
-        TxSize.fromObject = function fromObject(object) {
-            if (object instanceof $root.abci.TxSize)
+        EvidenceParams.fromObject = function fromObject(object) {
+            if (object instanceof $root.abci.EvidenceParams)
                 return object;
-            var message = new $root.abci.TxSize();
-            if (object.maxBytes != null)
-                message.maxBytes = object.maxBytes | 0;
-            if (object.maxGas != null)
+            var message = new $root.abci.EvidenceParams();
+            if (object.maxAge != null)
                 if ($util.Long)
-                    (message.maxGas = $util.Long.fromValue(object.maxGas)).unsigned = false;
-                else if (typeof object.maxGas === "string")
-                    message.maxGas = parseInt(object.maxGas, 10);
-                else if (typeof object.maxGas === "number")
-                    message.maxGas = object.maxGas;
-                else if (typeof object.maxGas === "object")
-                    message.maxGas = new $util.LongBits(object.maxGas.low >>> 0, object.maxGas.high >>> 0).toNumber();
+                    (message.maxAge = $util.Long.fromValue(object.maxAge)).unsigned = false;
+                else if (typeof object.maxAge === "string")
+                    message.maxAge = parseInt(object.maxAge, 10);
+                else if (typeof object.maxAge === "number")
+                    message.maxAge = object.maxAge;
+                else if (typeof object.maxAge === "object")
+                    message.maxAge = new $util.LongBits(object.maxAge.low >>> 0, object.maxAge.high >>> 0).toNumber();
             return message;
         };
 
         /**
-         * Creates a plain object from a TxSize message. Also converts values to other types if specified.
+         * Creates a plain object from an EvidenceParams message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof abci.TxSize
+         * @memberof abci.EvidenceParams
          * @static
-         * @param {abci.TxSize} message TxSize
+         * @param {abci.EvidenceParams} message EvidenceParams
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        TxSize.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.maxBytes = 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.maxGas = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.maxGas = options.longs === String ? "0" : 0;
-            }
-            if (message.maxBytes != null && message.hasOwnProperty("maxBytes"))
-                object.maxBytes = message.maxBytes;
-            if (message.maxGas != null && message.hasOwnProperty("maxGas"))
-                if (typeof message.maxGas === "number")
-                    object.maxGas = options.longs === String ? String(message.maxGas) : message.maxGas;
-                else
-                    object.maxGas = options.longs === String ? $util.Long.prototype.toString.call(message.maxGas) : options.longs === Number ? new $util.LongBits(message.maxGas.low >>> 0, message.maxGas.high >>> 0).toNumber() : message.maxGas;
-            return object;
-        };
-
-        /**
-         * Converts this TxSize to JSON.
-         * @function toJSON
-         * @memberof abci.TxSize
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        TxSize.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return TxSize;
-    })();
-
-    abci.BlockGossip = (function() {
-
-        /**
-         * Properties of a BlockGossip.
-         * @memberof abci
-         * @interface IBlockGossip
-         * @property {number|null} [blockPartSizeBytes] BlockGossip blockPartSizeBytes
-         */
-
-        /**
-         * Constructs a new BlockGossip.
-         * @memberof abci
-         * @classdesc Represents a BlockGossip.
-         * @implements IBlockGossip
-         * @constructor
-         * @param {abci.IBlockGossip=} [properties] Properties to set
-         */
-        function BlockGossip(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BlockGossip blockPartSizeBytes.
-         * @member {number} blockPartSizeBytes
-         * @memberof abci.BlockGossip
-         * @instance
-         */
-        BlockGossip.prototype.blockPartSizeBytes = 0;
-
-        /**
-         * Creates a new BlockGossip instance using the specified properties.
-         * @function create
-         * @memberof abci.BlockGossip
-         * @static
-         * @param {abci.IBlockGossip=} [properties] Properties to set
-         * @returns {abci.BlockGossip} BlockGossip instance
-         */
-        BlockGossip.create = function create(properties) {
-            return new BlockGossip(properties);
-        };
-
-        /**
-         * Encodes the specified BlockGossip message. Does not implicitly {@link abci.BlockGossip.verify|verify} messages.
-         * @function encode
-         * @memberof abci.BlockGossip
-         * @static
-         * @param {abci.IBlockGossip} message BlockGossip message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BlockGossip.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.blockPartSizeBytes != null && message.hasOwnProperty("blockPartSizeBytes"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.blockPartSizeBytes);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BlockGossip message, length delimited. Does not implicitly {@link abci.BlockGossip.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof abci.BlockGossip
-         * @static
-         * @param {abci.IBlockGossip} message BlockGossip message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BlockGossip.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BlockGossip message from the specified reader or buffer.
-         * @function decode
-         * @memberof abci.BlockGossip
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {abci.BlockGossip} BlockGossip
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BlockGossip.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.abci.BlockGossip();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.blockPartSizeBytes = reader.int32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BlockGossip message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof abci.BlockGossip
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {abci.BlockGossip} BlockGossip
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BlockGossip.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BlockGossip message.
-         * @function verify
-         * @memberof abci.BlockGossip
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BlockGossip.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.blockPartSizeBytes != null && message.hasOwnProperty("blockPartSizeBytes"))
-                if (!$util.isInteger(message.blockPartSizeBytes))
-                    return "blockPartSizeBytes: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a BlockGossip message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof abci.BlockGossip
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {abci.BlockGossip} BlockGossip
-         */
-        BlockGossip.fromObject = function fromObject(object) {
-            if (object instanceof $root.abci.BlockGossip)
-                return object;
-            var message = new $root.abci.BlockGossip();
-            if (object.blockPartSizeBytes != null)
-                message.blockPartSizeBytes = object.blockPartSizeBytes | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BlockGossip message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof abci.BlockGossip
-         * @static
-         * @param {abci.BlockGossip} message BlockGossip
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BlockGossip.toObject = function toObject(message, options) {
+        EvidenceParams.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
             if (options.defaults)
-                object.blockPartSizeBytes = 0;
-            if (message.blockPartSizeBytes != null && message.hasOwnProperty("blockPartSizeBytes"))
-                object.blockPartSizeBytes = message.blockPartSizeBytes;
+                object.maxAge = 0;
+            if (message.maxAge != null && message.hasOwnProperty("maxAge"))
+                if (typeof message.maxAge === "number")
+                    object.maxAge = options.longs === String ? String(message.maxAge) : message.maxAge;
+                else
+                    object.maxAge = options.longs === String ? $util.Long.prototype.toString.call(message.maxAge) : options.longs === Number ? new $util.LongBits(message.maxAge.low >>> 0, message.maxAge.high >>> 0).toNumber() : message.maxAge;
             return object;
         };
 
         /**
-         * Converts this BlockGossip to JSON.
+         * Converts this EvidenceParams to JSON.
          * @function toJSON
-         * @memberof abci.BlockGossip
+         * @memberof abci.EvidenceParams
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        BlockGossip.prototype.toJSON = function toJSON() {
+        EvidenceParams.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return BlockGossip;
+        return EvidenceParams;
     })();
 
     abci.LastCommitInfo = (function() {
@@ -7823,7 +7994,7 @@ $root.abci = (function() {
          * @memberof abci.Header
          * @instance
          */
-        Header.prototype.height = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        Header.prototype.height = 0;
 
         /**
          * Header time.
@@ -7839,7 +8010,7 @@ $root.abci = (function() {
          * @memberof abci.Header
          * @instance
          */
-        Header.prototype.numTxs = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        Header.prototype.numTxs = 0;
 
         /**
          * Header totalTxs.
@@ -7847,7 +8018,7 @@ $root.abci = (function() {
          * @memberof abci.Header
          * @instance
          */
-        Header.prototype.totalTxs = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        Header.prototype.totalTxs = 0;
 
         /**
          * Header lastBlockId.
@@ -8263,22 +8434,10 @@ $root.abci = (function() {
             var object = {};
             if (options.defaults) {
                 object.chainId = "";
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.height = options.longs === String ? "0" : 0;
+                object.height = 0;
                 object.time = null;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.numTxs = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.numTxs = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.totalTxs = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.totalTxs = options.longs === String ? "0" : 0;
+                object.numTxs = 0;
+                object.totalTxs = 0;
                 object.lastBlockId = null;
                 if (options.bytes === String)
                     object.lastCommitHash = "";
@@ -8882,7 +9041,7 @@ $root.abci = (function() {
          * @memberof abci.Validator
          * @instance
          */
-        Validator.prototype.power = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        Validator.prototype.power = 0;
 
         /**
          * Creates a new Validator instance using the specified properties.
@@ -9046,11 +9205,7 @@ $root.abci = (function() {
                     if (options.bytes !== Array)
                         object.address = $util.newBuffer(object.address);
                 }
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.power = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.power = options.longs === String ? "0" : 0;
+                object.power = 0;
             }
             if (message.address != null && message.hasOwnProperty("address"))
                 object.address = options.bytes === String ? $util.base64.encode(message.address, 0, message.address.length) : options.bytes === Array ? Array.prototype.slice.call(message.address) : message.address;
@@ -9115,7 +9270,7 @@ $root.abci = (function() {
          * @memberof abci.ValidatorUpdate
          * @instance
          */
-        ValidatorUpdate.prototype.power = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        ValidatorUpdate.prototype.power = 0;
 
         /**
          * Creates a new ValidatorUpdate instance using the specified properties.
@@ -9275,11 +9430,7 @@ $root.abci = (function() {
             var object = {};
             if (options.defaults) {
                 object.pubKey = null;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.power = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.power = options.longs === String ? "0" : 0;
+                object.power = 0;
             }
             if (message.pubKey != null && message.hasOwnProperty("pubKey"))
                 object.pubKey = $root.abci.PubKey.toObject(message.pubKey, options);
@@ -9789,7 +9940,7 @@ $root.abci = (function() {
          * @memberof abci.Evidence
          * @instance
          */
-        Evidence.prototype.height = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        Evidence.prototype.height = 0;
 
         /**
          * Evidence time.
@@ -9805,7 +9956,7 @@ $root.abci = (function() {
          * @memberof abci.Evidence
          * @instance
          */
-        Evidence.prototype.totalVotingPower = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        Evidence.prototype.totalVotingPower = 0;
 
         /**
          * Creates a new Evidence instance using the specified properties.
@@ -10008,17 +10159,9 @@ $root.abci = (function() {
             if (options.defaults) {
                 object.type = "";
                 object.validator = null;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.height = options.longs === String ? "0" : 0;
+                object.height = 0;
                 object.time = null;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.totalVotingPower = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.totalVotingPower = options.longs === String ? "0" : 0;
+                object.totalVotingPower = 0;
             }
             if (message.type != null && message.hasOwnProperty("type"))
                 object.type = message.type;
@@ -10448,22 +10591,43 @@ $root.abci = (function() {
          * @variation 2
          */
 
+        /**
+         * Callback as used by {@link abci.ABCIApplication#checkBridge}.
+         * @memberof abci.ABCIApplication
+         * @typedef CheckBridgeCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {abci.ResponseCheckBridge} [response] ResponseCheckBridge
+         */
+
+        /**
+         * Calls CheckBridge.
+         * @function checkBridge
+         * @memberof abci.ABCIApplication
+         * @instance
+         * @param {abci.IRequestCheckBridge} request RequestCheckBridge message or plain object
+         * @param {abci.ABCIApplication.CheckBridgeCallback} callback Node-style callback called with the error, if any, and ResponseCheckBridge
+         * @returns {undefined}
+         * @variation 1
+         */
+        Object.defineProperty(ABCIApplication.prototype.checkBridge = function checkBridge(request, callback) {
+            return this.rpcCall(checkBridge, $root.abci.RequestCheckBridge, $root.abci.ResponseCheckBridge, request, callback);
+        }, "name", { value: "CheckBridge" });
+
+        /**
+         * Calls CheckBridge.
+         * @function checkBridge
+         * @memberof abci.ABCIApplication
+         * @instance
+         * @param {abci.IRequestCheckBridge} request RequestCheckBridge message or plain object
+         * @returns {Promise<abci.ResponseCheckBridge>} Promise
+         * @variation 2
+         */
+
         return ABCIApplication;
     })();
 
     return abci;
-})();
-
-$root.gogoproto = (function() {
-
-    /**
-     * Namespace gogoproto.
-     * @exports gogoproto
-     * @namespace
-     */
-    var gogoproto = {};
-
-    return gogoproto;
 })();
 
 $root.google = (function() {
@@ -18792,7 +18956,7 @@ $root.google = (function() {
              * @memberof google.protobuf.UninterpretedOption
              * @instance
              */
-            UninterpretedOption.prototype.positiveIntValue = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+            UninterpretedOption.prototype.positiveIntValue = 0;
 
             /**
              * UninterpretedOption negativeIntValue.
@@ -18800,7 +18964,7 @@ $root.google = (function() {
              * @memberof google.protobuf.UninterpretedOption
              * @instance
              */
-            UninterpretedOption.prototype.negativeIntValue = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+            UninterpretedOption.prototype.negativeIntValue = 0;
 
             /**
              * UninterpretedOption doubleValue.
@@ -19058,16 +19222,8 @@ $root.google = (function() {
                     object.name = [];
                 if (options.defaults) {
                     object.identifierValue = "";
-                    if ($util.Long) {
-                        var long = new $util.Long(0, 0, true);
-                        object.positiveIntValue = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                    } else
-                        object.positiveIntValue = options.longs === String ? "0" : 0;
-                    if ($util.Long) {
-                        var long = new $util.Long(0, 0, false);
-                        object.negativeIntValue = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                    } else
-                        object.negativeIntValue = options.longs === String ? "0" : 0;
+                    object.positiveIntValue = 0;
+                    object.negativeIntValue = 0;
                     object.doubleValue = 0;
                     if (options.bytes === String)
                         object.stringValue = "";
@@ -20396,7 +20552,7 @@ $root.google = (function() {
              * @memberof google.protobuf.Timestamp
              * @instance
              */
-            Timestamp.prototype.seconds = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+            Timestamp.prototype.seconds = 0;
 
             /**
              * Timestamp nanos.
@@ -20558,11 +20714,7 @@ $root.google = (function() {
                     options = {};
                 var object = {};
                 if (options.defaults) {
-                    if ($util.Long) {
-                        var long = new $util.Long(0, 0, false);
-                        object.seconds = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                    } else
-                        object.seconds = options.longs === String ? "0" : 0;
+                    object.seconds = 0;
                     object.nanos = 0;
                 }
                 if (message.seconds != null && message.hasOwnProperty("seconds"))
@@ -20593,6 +20745,18 @@ $root.google = (function() {
     })();
 
     return google;
+})();
+
+$root.gogoproto = (function() {
+
+    /**
+     * Namespace gogoproto.
+     * @exports gogoproto
+     * @namespace
+     */
+    var gogoproto = {};
+
+    return gogoproto;
 })();
 
 $root.common = (function() {
@@ -20871,7 +21035,7 @@ $root.common = (function() {
          * @memberof common.KI64Pair
          * @instance
          */
-        KI64Pair.prototype.value = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        KI64Pair.prototype.value = 0;
 
         /**
          * Creates a new KI64Pair instance using the specified properties.
@@ -21035,11 +21199,7 @@ $root.common = (function() {
                     if (options.bytes !== Array)
                         object.key = $util.newBuffer(object.key);
                 }
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.value = options.longs === String ? "0" : 0;
+                object.value = 0;
             }
             if (message.key != null && message.hasOwnProperty("key"))
                 object.key = options.bytes === String ? $util.base64.encode(message.key, 0, message.key.length) : options.bytes === Array ? Array.prototype.slice.call(message.key) : message.key;
