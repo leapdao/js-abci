@@ -1,11 +1,11 @@
 syntax = "proto3";
-package abci;
+package types;
 
 // For more information on gogo.proto, see:
 // https://github.com/gogo/protobuf/blob/master/extensions.md
-import "gogo.proto";
-import "timestamp.proto";
-import "tmlibs.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+import "github.com/tendermint/tendermint/libs/common/types.proto";
 
 // This file is copied from http://github.com/tendermint/abci
 // NOTE: When using custom types, mind the warnings.
@@ -33,11 +33,10 @@ message Request {
     RequestQuery query = 7;
     RequestBeginBlock begin_block = 8;
     RequestCheckTx check_tx = 9;
-    RequestDeliverTx deliver_tx = 10;
+    RequestDeliverTx deliver_tx = 19;
     RequestEndBlock end_block = 11;
     RequestCommit commit = 12;
-    RequestSubmitBlock submit_block = 13;
-    RequestCheckBridge check_bridge = 20;
+    RequestCheckBridge check_bridge = 13;
   }
 }
 
@@ -96,12 +95,6 @@ message RequestEndBlock {
 message RequestCommit {
 }
 
-message RequestSubmitBlock {
-  int64 height = 1;
-  bytes prev_hash = 2;
-  repeated bytes txns = 3;
-}
-
 message RequestCheckBridge {
   int32 height = 1;
 }
@@ -123,8 +116,7 @@ message Response {
     ResponseDeliverTx deliver_tx = 10;
     ResponseEndBlock end_block = 11;
     ResponseCommit commit = 12;
-    ResponseSubmitBlock submit_block = 13;
-    ResponseCheckBridge check_bridge = 20;
+    ResponseCheckBridge check_bridge = 13;
   }
 }
 
@@ -207,11 +199,6 @@ message ResponseCommit {
   bytes data = 2;
 }
 
-message ResponseSubmitBlock {
-  // reserve 1
-  bytes hash = 2;
-}
-
 message ResponseCheckBridge {
   uint32 status = 1;
 }
@@ -223,27 +210,21 @@ message ResponseCheckBridge {
 // that can be adjusted by the abci app
 message ConsensusParams {
   BlockSize block_size = 1;
-  TxSize tx_size = 2;
-  BlockGossip block_gossip = 3;
+  EvidenceParams evidence_params = 2;
 }
 
 // BlockSize contains limits on the block size.
 message BlockSize {
-  int32 max_bytes = 1;
+  // Note: must be greater than 0
+  int64 max_bytes = 1;
+  // Note: must be greater or equal to -1
   int64 max_gas = 2;
 }
 
-// TxSize contains limits on the tx size.
-message TxSize {
-  int32 max_bytes = 1;
-  int64 max_gas = 2;
-}
-
-// BlockGossip determine consensus critical
-// elements of how blocks are gossiped
-message BlockGossip {
-  // Note: must not be 0
-  int32 block_part_size_bytes = 1;
+// EvidenceParams contains limits on the evidence.
+message EvidenceParams {
+  // Note: must be greater than 0
+  int64 max_age = 1;
 }
 
 message LastCommitInfo {
@@ -338,6 +319,5 @@ service ABCIApplication {
   rpc InitChain(RequestInitChain) returns (ResponseInitChain);
   rpc BeginBlock(RequestBeginBlock) returns (ResponseBeginBlock);
   rpc EndBlock(RequestEndBlock) returns (ResponseEndBlock);
-  rpc SubmitBlock(RequestSubmitBlock) returns (ResponseSubmitBlock);
   rpc CheckBridge(RequestCheckBridge) returns (ResponseCheckBridge);
 }
