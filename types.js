@@ -990,7 +990,7 @@ $root.abci = (function() {
          * @memberof abci.RequestInfo
          * @instance
          */
-        RequestInfo.prototype.blockVersion = 0;
+        RequestInfo.prototype.blockVersion = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
          * RequestInfo p2pVersion.
@@ -998,7 +998,7 @@ $root.abci = (function() {
          * @memberof abci.RequestInfo
          * @instance
          */
-        RequestInfo.prototype.p2pVersion = 0;
+        RequestInfo.prototype.p2pVersion = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
          * Creates a new RequestInfo instance using the specified properties.
@@ -1170,8 +1170,16 @@ $root.abci = (function() {
             var object = {};
             if (options.defaults) {
                 object.version = "";
-                object.blockVersion = 0;
-                object.p2pVersion = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.blockVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.blockVersion = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.p2pVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.p2pVersion = options.longs === String ? "0" : 0;
             }
             if (message.version != null && message.hasOwnProperty("version"))
                 object.version = message.version;
@@ -1778,7 +1786,7 @@ $root.abci = (function() {
          * @memberof abci.RequestQuery
          * @instance
          */
-        RequestQuery.prototype.height = 0;
+        RequestQuery.prototype.height = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * RequestQuery prove.
@@ -1971,7 +1979,11 @@ $root.abci = (function() {
                         object.data = $util.newBuffer(object.data);
                 }
                 object.path = "";
-                object.height = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.height = options.longs === String ? "0" : 0;
                 object.prove = false;
             }
             if (message.data != null && message.hasOwnProperty("data"))
@@ -2719,7 +2731,7 @@ $root.abci = (function() {
          * @memberof abci.RequestEndBlock
          * @instance
          */
-        RequestEndBlock.prototype.height = 0;
+        RequestEndBlock.prototype.height = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * Creates a new RequestEndBlock instance using the specified properties.
@@ -2863,7 +2875,11 @@ $root.abci = (function() {
                 options = {};
             var object = {};
             if (options.defaults)
-                object.height = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.height = options.longs === String ? "0" : 0;
             if (message.height != null && message.hasOwnProperty("height"))
                 if (typeof message.height === "number")
                     object.height = options.longs === String ? String(message.height) : message.height;
@@ -4436,7 +4452,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseInfo
          * @instance
          */
-        ResponseInfo.prototype.appVersion = 0;
+        ResponseInfo.prototype.appVersion = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
          * ResponseInfo lastBlockHeight.
@@ -4444,7 +4460,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseInfo
          * @instance
          */
-        ResponseInfo.prototype.lastBlockHeight = 0;
+        ResponseInfo.prototype.lastBlockHeight = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * ResponseInfo lastBlockAppHash.
@@ -4648,8 +4664,16 @@ $root.abci = (function() {
             if (options.defaults) {
                 object.data = "";
                 object.version = "";
-                object.appVersion = 0;
-                object.lastBlockHeight = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.appVersion = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.appVersion = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.lastBlockHeight = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.lastBlockHeight = options.longs === String ? "0" : 0;
                 if (options.bytes === String)
                     object.lastBlockAppHash = "";
                 else {
@@ -5221,7 +5245,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseQuery
          * @instance
          */
-        ResponseQuery.prototype.index = 0;
+        ResponseQuery.prototype.index = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * ResponseQuery key.
@@ -5253,7 +5277,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseQuery
          * @instance
          */
-        ResponseQuery.prototype.height = 0;
+        ResponseQuery.prototype.height = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * ResponseQuery codespace.
@@ -5506,7 +5530,11 @@ $root.abci = (function() {
                 object.code = 0;
                 object.log = "";
                 object.info = "";
-                object.index = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.index = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.index = options.longs === String ? "0" : 0;
                 if (options.bytes === String)
                     object.key = "";
                 else {
@@ -5522,7 +5550,11 @@ $root.abci = (function() {
                         object.value = $util.newBuffer(object.value);
                 }
                 object.proof = null;
-                object.height = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.height = options.longs === String ? "0" : 0;
                 object.codespace = "";
             }
             if (message.code != null && message.hasOwnProperty("code"))
@@ -5844,7 +5876,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseCheckTx
          * @instance
          */
-        ResponseCheckTx.prototype.gasWanted = 0;
+        ResponseCheckTx.prototype.gasWanted = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * ResponseCheckTx gasUsed.
@@ -5852,7 +5884,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseCheckTx
          * @instance
          */
-        ResponseCheckTx.prototype.gasUsed = 0;
+        ResponseCheckTx.prototype.gasUsed = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * ResponseCheckTx tags.
@@ -6121,8 +6153,16 @@ $root.abci = (function() {
                 }
                 object.log = "";
                 object.info = "";
-                object.gasWanted = 0;
-                object.gasUsed = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.gasWanted = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.gasWanted = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.gasUsed = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.gasUsed = options.longs === String ? "0" : 0;
                 object.codespace = "";
             }
             if (message.code != null && message.hasOwnProperty("code"))
@@ -6237,7 +6277,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseDeliverTx
          * @instance
          */
-        ResponseDeliverTx.prototype.gasWanted = 0;
+        ResponseDeliverTx.prototype.gasWanted = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * ResponseDeliverTx gasUsed.
@@ -6245,7 +6285,7 @@ $root.abci = (function() {
          * @memberof abci.ResponseDeliverTx
          * @instance
          */
-        ResponseDeliverTx.prototype.gasUsed = 0;
+        ResponseDeliverTx.prototype.gasUsed = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * ResponseDeliverTx tags.
@@ -6514,8 +6554,16 @@ $root.abci = (function() {
                 }
                 object.log = "";
                 object.info = "";
-                object.gasWanted = 0;
-                object.gasUsed = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.gasWanted = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.gasWanted = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.gasUsed = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.gasUsed = options.longs === String ? "0" : 0;
                 object.codespace = "";
             }
             if (message.code != null && message.hasOwnProperty("code"))
@@ -7229,7 +7277,7 @@ $root.abci = (function() {
          * Properties of a ConsensusParams.
          * @memberof abci
          * @interface IConsensusParams
-         * @property {abci.IBlockSizeParams|null} [blockSize] ConsensusParams blockSize
+         * @property {abci.IBlockParams|null} [block] ConsensusParams block
          * @property {abci.IEvidenceParams|null} [evidence] ConsensusParams evidence
          * @property {abci.IValidatorParams|null} [validator] ConsensusParams validator
          */
@@ -7250,12 +7298,12 @@ $root.abci = (function() {
         }
 
         /**
-         * ConsensusParams blockSize.
-         * @member {abci.IBlockSizeParams|null|undefined} blockSize
+         * ConsensusParams block.
+         * @member {abci.IBlockParams|null|undefined} block
          * @memberof abci.ConsensusParams
          * @instance
          */
-        ConsensusParams.prototype.blockSize = null;
+        ConsensusParams.prototype.block = null;
 
         /**
          * ConsensusParams evidence.
@@ -7297,8 +7345,8 @@ $root.abci = (function() {
         ConsensusParams.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.blockSize != null && message.hasOwnProperty("blockSize"))
-                $root.abci.BlockSizeParams.encode(message.blockSize, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            if (message.block != null && message.hasOwnProperty("block"))
+                $root.abci.BlockParams.encode(message.block, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.evidence != null && message.hasOwnProperty("evidence"))
                 $root.abci.EvidenceParams.encode(message.evidence, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             if (message.validator != null && message.hasOwnProperty("validator"))
@@ -7338,7 +7386,7 @@ $root.abci = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.blockSize = $root.abci.BlockSizeParams.decode(reader, reader.uint32());
+                    message.block = $root.abci.BlockParams.decode(reader, reader.uint32());
                     break;
                 case 2:
                     message.evidence = $root.abci.EvidenceParams.decode(reader, reader.uint32());
@@ -7381,10 +7429,10 @@ $root.abci = (function() {
         ConsensusParams.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.blockSize != null && message.hasOwnProperty("blockSize")) {
-                var error = $root.abci.BlockSizeParams.verify(message.blockSize);
+            if (message.block != null && message.hasOwnProperty("block")) {
+                var error = $root.abci.BlockParams.verify(message.block);
                 if (error)
-                    return "blockSize." + error;
+                    return "block." + error;
             }
             if (message.evidence != null && message.hasOwnProperty("evidence")) {
                 var error = $root.abci.EvidenceParams.verify(message.evidence);
@@ -7411,10 +7459,10 @@ $root.abci = (function() {
             if (object instanceof $root.abci.ConsensusParams)
                 return object;
             var message = new $root.abci.ConsensusParams();
-            if (object.blockSize != null) {
-                if (typeof object.blockSize !== "object")
-                    throw TypeError(".abci.ConsensusParams.blockSize: object expected");
-                message.blockSize = $root.abci.BlockSizeParams.fromObject(object.blockSize);
+            if (object.block != null) {
+                if (typeof object.block !== "object")
+                    throw TypeError(".abci.ConsensusParams.block: object expected");
+                message.block = $root.abci.BlockParams.fromObject(object.block);
             }
             if (object.evidence != null) {
                 if (typeof object.evidence !== "object")
@@ -7443,12 +7491,12 @@ $root.abci = (function() {
                 options = {};
             var object = {};
             if (options.defaults) {
-                object.blockSize = null;
+                object.block = null;
                 object.evidence = null;
                 object.validator = null;
             }
-            if (message.blockSize != null && message.hasOwnProperty("blockSize"))
-                object.blockSize = $root.abci.BlockSizeParams.toObject(message.blockSize, options);
+            if (message.block != null && message.hasOwnProperty("block"))
+                object.block = $root.abci.BlockParams.toObject(message.block, options);
             if (message.evidence != null && message.hasOwnProperty("evidence"))
                 object.evidence = $root.abci.EvidenceParams.toObject(message.evidence, options);
             if (message.validator != null && message.hasOwnProperty("validator"))
@@ -7470,25 +7518,25 @@ $root.abci = (function() {
         return ConsensusParams;
     })();
 
-    abci.BlockSizeParams = (function() {
+    abci.BlockParams = (function() {
 
         /**
-         * Properties of a BlockSizeParams.
+         * Properties of a BlockParams.
          * @memberof abci
-         * @interface IBlockSizeParams
-         * @property {number|Long|null} [maxBytes] BlockSizeParams maxBytes
-         * @property {number|Long|null} [maxGas] BlockSizeParams maxGas
+         * @interface IBlockParams
+         * @property {number|Long|null} [maxBytes] BlockParams maxBytes
+         * @property {number|Long|null} [maxGas] BlockParams maxGas
          */
 
         /**
-         * Constructs a new BlockSizeParams.
+         * Constructs a new BlockParams.
          * @memberof abci
-         * @classdesc Represents a BlockSizeParams.
-         * @implements IBlockSizeParams
+         * @classdesc Represents a BlockParams.
+         * @implements IBlockParams
          * @constructor
-         * @param {abci.IBlockSizeParams=} [properties] Properties to set
+         * @param {abci.IBlockParams=} [properties] Properties to set
          */
-        function BlockSizeParams(properties) {
+        function BlockParams(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -7496,43 +7544,43 @@ $root.abci = (function() {
         }
 
         /**
-         * BlockSizeParams maxBytes.
+         * BlockParams maxBytes.
          * @member {number|Long} maxBytes
-         * @memberof abci.BlockSizeParams
+         * @memberof abci.BlockParams
          * @instance
          */
-        BlockSizeParams.prototype.maxBytes = 0;
+        BlockParams.prototype.maxBytes = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
-         * BlockSizeParams maxGas.
+         * BlockParams maxGas.
          * @member {number|Long} maxGas
-         * @memberof abci.BlockSizeParams
+         * @memberof abci.BlockParams
          * @instance
          */
-        BlockSizeParams.prototype.maxGas = 0;
+        BlockParams.prototype.maxGas = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
-         * Creates a new BlockSizeParams instance using the specified properties.
+         * Creates a new BlockParams instance using the specified properties.
          * @function create
-         * @memberof abci.BlockSizeParams
+         * @memberof abci.BlockParams
          * @static
-         * @param {abci.IBlockSizeParams=} [properties] Properties to set
-         * @returns {abci.BlockSizeParams} BlockSizeParams instance
+         * @param {abci.IBlockParams=} [properties] Properties to set
+         * @returns {abci.BlockParams} BlockParams instance
          */
-        BlockSizeParams.create = function create(properties) {
-            return new BlockSizeParams(properties);
+        BlockParams.create = function create(properties) {
+            return new BlockParams(properties);
         };
 
         /**
-         * Encodes the specified BlockSizeParams message. Does not implicitly {@link abci.BlockSizeParams.verify|verify} messages.
+         * Encodes the specified BlockParams message. Does not implicitly {@link abci.BlockParams.verify|verify} messages.
          * @function encode
-         * @memberof abci.BlockSizeParams
+         * @memberof abci.BlockParams
          * @static
-         * @param {abci.IBlockSizeParams} message BlockSizeParams message or plain object to encode
+         * @param {abci.IBlockParams} message BlockParams message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        BlockSizeParams.encode = function encode(message, writer) {
+        BlockParams.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.maxBytes != null && message.hasOwnProperty("maxBytes"))
@@ -7543,33 +7591,33 @@ $root.abci = (function() {
         };
 
         /**
-         * Encodes the specified BlockSizeParams message, length delimited. Does not implicitly {@link abci.BlockSizeParams.verify|verify} messages.
+         * Encodes the specified BlockParams message, length delimited. Does not implicitly {@link abci.BlockParams.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof abci.BlockSizeParams
+         * @memberof abci.BlockParams
          * @static
-         * @param {abci.IBlockSizeParams} message BlockSizeParams message or plain object to encode
+         * @param {abci.IBlockParams} message BlockParams message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        BlockSizeParams.encodeDelimited = function encodeDelimited(message, writer) {
+        BlockParams.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a BlockSizeParams message from the specified reader or buffer.
+         * Decodes a BlockParams message from the specified reader or buffer.
          * @function decode
-         * @memberof abci.BlockSizeParams
+         * @memberof abci.BlockParams
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {abci.BlockSizeParams} BlockSizeParams
+         * @returns {abci.BlockParams} BlockParams
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        BlockSizeParams.decode = function decode(reader, length) {
+        BlockParams.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.abci.BlockSizeParams();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.abci.BlockParams();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
@@ -7588,30 +7636,30 @@ $root.abci = (function() {
         };
 
         /**
-         * Decodes a BlockSizeParams message from the specified reader or buffer, length delimited.
+         * Decodes a BlockParams message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof abci.BlockSizeParams
+         * @memberof abci.BlockParams
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {abci.BlockSizeParams} BlockSizeParams
+         * @returns {abci.BlockParams} BlockParams
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        BlockSizeParams.decodeDelimited = function decodeDelimited(reader) {
+        BlockParams.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a BlockSizeParams message.
+         * Verifies a BlockParams message.
          * @function verify
-         * @memberof abci.BlockSizeParams
+         * @memberof abci.BlockParams
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        BlockSizeParams.verify = function verify(message) {
+        BlockParams.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.maxBytes != null && message.hasOwnProperty("maxBytes"))
@@ -7624,17 +7672,17 @@ $root.abci = (function() {
         };
 
         /**
-         * Creates a BlockSizeParams message from a plain object. Also converts values to their respective internal types.
+         * Creates a BlockParams message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof abci.BlockSizeParams
+         * @memberof abci.BlockParams
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {abci.BlockSizeParams} BlockSizeParams
+         * @returns {abci.BlockParams} BlockParams
          */
-        BlockSizeParams.fromObject = function fromObject(object) {
-            if (object instanceof $root.abci.BlockSizeParams)
+        BlockParams.fromObject = function fromObject(object) {
+            if (object instanceof $root.abci.BlockParams)
                 return object;
-            var message = new $root.abci.BlockSizeParams();
+            var message = new $root.abci.BlockParams();
             if (object.maxBytes != null)
                 if ($util.Long)
                     (message.maxBytes = $util.Long.fromValue(object.maxBytes)).unsigned = false;
@@ -7657,21 +7705,29 @@ $root.abci = (function() {
         };
 
         /**
-         * Creates a plain object from a BlockSizeParams message. Also converts values to other types if specified.
+         * Creates a plain object from a BlockParams message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof abci.BlockSizeParams
+         * @memberof abci.BlockParams
          * @static
-         * @param {abci.BlockSizeParams} message BlockSizeParams
+         * @param {abci.BlockParams} message BlockParams
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        BlockSizeParams.toObject = function toObject(message, options) {
+        BlockParams.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
             if (options.defaults) {
-                object.maxBytes = 0;
-                object.maxGas = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.maxBytes = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.maxBytes = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.maxGas = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.maxGas = options.longs === String ? "0" : 0;
             }
             if (message.maxBytes != null && message.hasOwnProperty("maxBytes"))
                 if (typeof message.maxBytes === "number")
@@ -7687,17 +7743,17 @@ $root.abci = (function() {
         };
 
         /**
-         * Converts this BlockSizeParams to JSON.
+         * Converts this BlockParams to JSON.
          * @function toJSON
-         * @memberof abci.BlockSizeParams
+         * @memberof abci.BlockParams
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        BlockSizeParams.prototype.toJSON = function toJSON() {
+        BlockParams.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return BlockSizeParams;
+        return BlockParams;
     })();
 
     abci.EvidenceParams = (function() {
@@ -7730,7 +7786,7 @@ $root.abci = (function() {
          * @memberof abci.EvidenceParams
          * @instance
          */
-        EvidenceParams.prototype.maxAge = 0;
+        EvidenceParams.prototype.maxAge = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * Creates a new EvidenceParams instance using the specified properties.
@@ -7874,7 +7930,11 @@ $root.abci = (function() {
                 options = {};
             var object = {};
             if (options.defaults)
-                object.maxAge = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.maxAge = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.maxAge = options.longs === String ? "0" : 0;
             if (message.maxAge != null && message.hasOwnProperty("maxAge"))
                 if (typeof message.maxAge === "number")
                     object.maxAge = options.longs === String ? String(message.maxAge) : message.maxAge;
@@ -8392,7 +8452,7 @@ $root.abci = (function() {
          * @memberof abci.Header
          * @instance
          */
-        Header.prototype.height = 0;
+        Header.prototype.height = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * Header time.
@@ -8408,7 +8468,7 @@ $root.abci = (function() {
          * @memberof abci.Header
          * @instance
          */
-        Header.prototype.numTxs = 0;
+        Header.prototype.numTxs = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * Header totalTxs.
@@ -8416,7 +8476,7 @@ $root.abci = (function() {
          * @memberof abci.Header
          * @instance
          */
-        Header.prototype.totalTxs = 0;
+        Header.prototype.totalTxs = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * Header lastBlockId.
@@ -8848,10 +8908,22 @@ $root.abci = (function() {
             if (options.defaults) {
                 object.version = null;
                 object.chainId = "";
-                object.height = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.height = options.longs === String ? "0" : 0;
                 object.time = null;
-                object.numTxs = 0;
-                object.totalTxs = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.numTxs = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.numTxs = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.totalTxs = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.totalTxs = options.longs === String ? "0" : 0;
                 object.lastBlockId = null;
                 if (options.bytes === String)
                     object.lastCommitHash = "";
@@ -9006,7 +9078,7 @@ $root.abci = (function() {
          * @memberof abci.Version
          * @instance
          */
-        Version.prototype.Block = 0;
+        Version.prototype.Block = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
          * Version App.
@@ -9014,7 +9086,7 @@ $root.abci = (function() {
          * @memberof abci.Version
          * @instance
          */
-        Version.prototype.App = 0;
+        Version.prototype.App = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
          * Creates a new Version instance using the specified properties.
@@ -9175,8 +9247,16 @@ $root.abci = (function() {
                 options = {};
             var object = {};
             if (options.defaults) {
-                object.Block = 0;
-                object.App = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.Block = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.Block = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.App = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.App = options.longs === String ? "0" : 0;
             }
             if (message.Block != null && message.hasOwnProperty("Block"))
                 if (typeof message.Block === "number")
@@ -9687,7 +9767,7 @@ $root.abci = (function() {
          * @memberof abci.Validator
          * @instance
          */
-        Validator.prototype.power = 0;
+        Validator.prototype.power = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * Creates a new Validator instance using the specified properties.
@@ -9851,7 +9931,11 @@ $root.abci = (function() {
                     if (options.bytes !== Array)
                         object.address = $util.newBuffer(object.address);
                 }
-                object.power = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.power = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.power = options.longs === String ? "0" : 0;
             }
             if (message.address != null && message.hasOwnProperty("address"))
                 object.address = options.bytes === String ? $util.base64.encode(message.address, 0, message.address.length) : options.bytes === Array ? Array.prototype.slice.call(message.address) : message.address;
@@ -9916,7 +10000,7 @@ $root.abci = (function() {
          * @memberof abci.ValidatorUpdate
          * @instance
          */
-        ValidatorUpdate.prototype.power = 0;
+        ValidatorUpdate.prototype.power = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * Creates a new ValidatorUpdate instance using the specified properties.
@@ -10076,7 +10160,11 @@ $root.abci = (function() {
             var object = {};
             if (options.defaults) {
                 object.pubKey = null;
-                object.power = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.power = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.power = options.longs === String ? "0" : 0;
             }
             if (message.pubKey != null && message.hasOwnProperty("pubKey"))
                 object.pubKey = $root.abci.PubKey.toObject(message.pubKey, options);
@@ -10586,7 +10674,7 @@ $root.abci = (function() {
          * @memberof abci.Evidence
          * @instance
          */
-        Evidence.prototype.height = 0;
+        Evidence.prototype.height = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * Evidence time.
@@ -10602,7 +10690,7 @@ $root.abci = (function() {
          * @memberof abci.Evidence
          * @instance
          */
-        Evidence.prototype.totalVotingPower = 0;
+        Evidence.prototype.totalVotingPower = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * Creates a new Evidence instance using the specified properties.
@@ -10805,9 +10893,17 @@ $root.abci = (function() {
             if (options.defaults) {
                 object.type = "";
                 object.validator = null;
-                object.height = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.height = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.height = options.longs === String ? "0" : 0;
                 object.time = null;
-                object.totalVotingPower = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.totalVotingPower = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.totalVotingPower = options.longs === String ? "0" : 0;
             }
             if (message.type != null && message.hasOwnProperty("type"))
                 object.type = message.type;
@@ -15493,6 +15589,8 @@ $root.google = (function() {
              * @property {boolean|null} [".gogoproto.enumdeclAll"] FileOptions .gogoproto.enumdeclAll
              * @property {boolean|null} [".gogoproto.goprotoRegistration"] FileOptions .gogoproto.goprotoRegistration
              * @property {boolean|null} [".gogoproto.messagenameAll"] FileOptions .gogoproto.messagenameAll
+             * @property {boolean|null} [".gogoproto.goprotoSizecacheAll"] FileOptions .gogoproto.goprotoSizecacheAll
+             * @property {boolean|null} [".gogoproto.goprotoUnkeyedAll"] FileOptions .gogoproto.goprotoUnkeyedAll
              */
 
             /**
@@ -15904,6 +16002,22 @@ $root.google = (function() {
             FileOptions.prototype[".gogoproto.messagenameAll"] = false;
 
             /**
+             * FileOptions .gogoproto.goprotoSizecacheAll.
+             * @member {boolean} .gogoproto.goprotoSizecacheAll
+             * @memberof google.protobuf.FileOptions
+             * @instance
+             */
+            FileOptions.prototype[".gogoproto.goprotoSizecacheAll"] = false;
+
+            /**
+             * FileOptions .gogoproto.goprotoUnkeyedAll.
+             * @member {boolean} .gogoproto.goprotoUnkeyedAll
+             * @memberof google.protobuf.FileOptions
+             * @instance
+             */
+            FileOptions.prototype[".gogoproto.goprotoUnkeyedAll"] = false;
+
+            /**
              * Creates a new FileOptions instance using the specified properties.
              * @function create
              * @memberof google.protobuf.FileOptions
@@ -16026,6 +16140,10 @@ $root.google = (function() {
                     writer.uint32(/* id 63032, wireType 0 =*/504256).bool(message[".gogoproto.goprotoRegistration"]);
                 if (message[".gogoproto.messagenameAll"] != null && message.hasOwnProperty(".gogoproto.messagenameAll"))
                     writer.uint32(/* id 63033, wireType 0 =*/504264).bool(message[".gogoproto.messagenameAll"]);
+                if (message[".gogoproto.goprotoSizecacheAll"] != null && message.hasOwnProperty(".gogoproto.goprotoSizecacheAll"))
+                    writer.uint32(/* id 63034, wireType 0 =*/504272).bool(message[".gogoproto.goprotoSizecacheAll"]);
+                if (message[".gogoproto.goprotoUnkeyedAll"] != null && message.hasOwnProperty(".gogoproto.goprotoUnkeyedAll"))
+                    writer.uint32(/* id 63035, wireType 0 =*/504280).bool(message[".gogoproto.goprotoUnkeyedAll"]);
                 return writer;
             };
 
@@ -16208,6 +16326,12 @@ $root.google = (function() {
                         break;
                     case 63033:
                         message[".gogoproto.messagenameAll"] = reader.bool();
+                        break;
+                    case 63034:
+                        message[".gogoproto.goprotoSizecacheAll"] = reader.bool();
+                        break;
+                    case 63035:
+                        message[".gogoproto.goprotoUnkeyedAll"] = reader.bool();
                         break;
                     default:
                         reader.skipType(tag & 7);
@@ -16403,6 +16527,12 @@ $root.google = (function() {
                 if (message[".gogoproto.messagenameAll"] != null && message.hasOwnProperty(".gogoproto.messagenameAll"))
                     if (typeof message[".gogoproto.messagenameAll"] !== "boolean")
                         return ".gogoproto.messagenameAll: boolean expected";
+                if (message[".gogoproto.goprotoSizecacheAll"] != null && message.hasOwnProperty(".gogoproto.goprotoSizecacheAll"))
+                    if (typeof message[".gogoproto.goprotoSizecacheAll"] !== "boolean")
+                        return ".gogoproto.goprotoSizecacheAll: boolean expected";
+                if (message[".gogoproto.goprotoUnkeyedAll"] != null && message.hasOwnProperty(".gogoproto.goprotoUnkeyedAll"))
+                    if (typeof message[".gogoproto.goprotoUnkeyedAll"] !== "boolean")
+                        return ".gogoproto.goprotoUnkeyedAll: boolean expected";
                 return null;
             };
 
@@ -16536,6 +16666,10 @@ $root.google = (function() {
                     message[".gogoproto.goprotoRegistration"] = Boolean(object[".gogoproto.goprotoRegistration"]);
                 if (object[".gogoproto.messagenameAll"] != null)
                     message[".gogoproto.messagenameAll"] = Boolean(object[".gogoproto.messagenameAll"]);
+                if (object[".gogoproto.goprotoSizecacheAll"] != null)
+                    message[".gogoproto.goprotoSizecacheAll"] = Boolean(object[".gogoproto.goprotoSizecacheAll"]);
+                if (object[".gogoproto.goprotoUnkeyedAll"] != null)
+                    message[".gogoproto.goprotoUnkeyedAll"] = Boolean(object[".gogoproto.goprotoUnkeyedAll"]);
                 return message;
             };
 
@@ -16603,6 +16737,8 @@ $root.google = (function() {
                     object[".gogoproto.enumdeclAll"] = false;
                     object[".gogoproto.goprotoRegistration"] = false;
                     object[".gogoproto.messagenameAll"] = false;
+                    object[".gogoproto.goprotoSizecacheAll"] = false;
+                    object[".gogoproto.goprotoUnkeyedAll"] = false;
                 }
                 if (message.javaPackage != null && message.hasOwnProperty("javaPackage"))
                     object.javaPackage = message.javaPackage;
@@ -16705,6 +16841,10 @@ $root.google = (function() {
                     object[".gogoproto.goprotoRegistration"] = message[".gogoproto.goprotoRegistration"];
                 if (message[".gogoproto.messagenameAll"] != null && message.hasOwnProperty(".gogoproto.messagenameAll"))
                     object[".gogoproto.messagenameAll"] = message[".gogoproto.messagenameAll"];
+                if (message[".gogoproto.goprotoSizecacheAll"] != null && message.hasOwnProperty(".gogoproto.goprotoSizecacheAll"))
+                    object[".gogoproto.goprotoSizecacheAll"] = message[".gogoproto.goprotoSizecacheAll"];
+                if (message[".gogoproto.goprotoUnkeyedAll"] != null && message.hasOwnProperty(".gogoproto.goprotoUnkeyedAll"))
+                    object[".gogoproto.goprotoUnkeyedAll"] = message[".gogoproto.goprotoUnkeyedAll"];
                 return object;
             };
 
@@ -16773,6 +16913,8 @@ $root.google = (function() {
              * @property {boolean|null} [".gogoproto.compare"] MessageOptions .gogoproto.compare
              * @property {boolean|null} [".gogoproto.typedecl"] MessageOptions .gogoproto.typedecl
              * @property {boolean|null} [".gogoproto.messagename"] MessageOptions .gogoproto.messagename
+             * @property {boolean|null} [".gogoproto.goprotoSizecache"] MessageOptions .gogoproto.goprotoSizecache
+             * @property {boolean|null} [".gogoproto.goprotoUnkeyed"] MessageOptions .gogoproto.goprotoUnkeyed
              */
 
             /**
@@ -17024,6 +17166,22 @@ $root.google = (function() {
             MessageOptions.prototype[".gogoproto.messagename"] = false;
 
             /**
+             * MessageOptions .gogoproto.goprotoSizecache.
+             * @member {boolean} .gogoproto.goprotoSizecache
+             * @memberof google.protobuf.MessageOptions
+             * @instance
+             */
+            MessageOptions.prototype[".gogoproto.goprotoSizecache"] = false;
+
+            /**
+             * MessageOptions .gogoproto.goprotoUnkeyed.
+             * @member {boolean} .gogoproto.goprotoUnkeyed
+             * @memberof google.protobuf.MessageOptions
+             * @instance
+             */
+            MessageOptions.prototype[".gogoproto.goprotoUnkeyed"] = false;
+
+            /**
              * Creates a new MessageOptions instance using the specified properties.
              * @function create
              * @memberof google.protobuf.MessageOptions
@@ -17104,6 +17262,10 @@ $root.google = (function() {
                     writer.uint32(/* id 64030, wireType 0 =*/512240).bool(message[".gogoproto.typedecl"]);
                 if (message[".gogoproto.messagename"] != null && message.hasOwnProperty(".gogoproto.messagename"))
                     writer.uint32(/* id 64033, wireType 0 =*/512264).bool(message[".gogoproto.messagename"]);
+                if (message[".gogoproto.goprotoSizecache"] != null && message.hasOwnProperty(".gogoproto.goprotoSizecache"))
+                    writer.uint32(/* id 64034, wireType 0 =*/512272).bool(message[".gogoproto.goprotoSizecache"]);
+                if (message[".gogoproto.goprotoUnkeyed"] != null && message.hasOwnProperty(".gogoproto.goprotoUnkeyed"))
+                    writer.uint32(/* id 64035, wireType 0 =*/512280).bool(message[".gogoproto.goprotoUnkeyed"]);
                 if (message[".gogoproto.stringer"] != null && message.hasOwnProperty(".gogoproto.stringer"))
                     writer.uint32(/* id 67008, wireType 0 =*/536064).bool(message[".gogoproto.stringer"]);
                 return writer;
@@ -17228,6 +17390,12 @@ $root.google = (function() {
                         break;
                     case 64033:
                         message[".gogoproto.messagename"] = reader.bool();
+                        break;
+                    case 64034:
+                        message[".gogoproto.goprotoSizecache"] = reader.bool();
+                        break;
+                    case 64035:
+                        message[".gogoproto.goprotoUnkeyed"] = reader.bool();
                         break;
                     default:
                         reader.skipType(tag & 7);
@@ -17357,6 +17525,12 @@ $root.google = (function() {
                 if (message[".gogoproto.messagename"] != null && message.hasOwnProperty(".gogoproto.messagename"))
                     if (typeof message[".gogoproto.messagename"] !== "boolean")
                         return ".gogoproto.messagename: boolean expected";
+                if (message[".gogoproto.goprotoSizecache"] != null && message.hasOwnProperty(".gogoproto.goprotoSizecache"))
+                    if (typeof message[".gogoproto.goprotoSizecache"] !== "boolean")
+                        return ".gogoproto.goprotoSizecache: boolean expected";
+                if (message[".gogoproto.goprotoUnkeyed"] != null && message.hasOwnProperty(".gogoproto.goprotoUnkeyed"))
+                    if (typeof message[".gogoproto.goprotoUnkeyed"] !== "boolean")
+                        return ".gogoproto.goprotoUnkeyed: boolean expected";
                 return null;
             };
 
@@ -17438,6 +17612,10 @@ $root.google = (function() {
                     message[".gogoproto.typedecl"] = Boolean(object[".gogoproto.typedecl"]);
                 if (object[".gogoproto.messagename"] != null)
                     message[".gogoproto.messagename"] = Boolean(object[".gogoproto.messagename"]);
+                if (object[".gogoproto.goprotoSizecache"] != null)
+                    message[".gogoproto.goprotoSizecache"] = Boolean(object[".gogoproto.goprotoSizecache"]);
+                if (object[".gogoproto.goprotoUnkeyed"] != null)
+                    message[".gogoproto.goprotoUnkeyed"] = Boolean(object[".gogoproto.goprotoUnkeyed"]);
                 return message;
             };
 
@@ -17484,6 +17662,8 @@ $root.google = (function() {
                     object[".gogoproto.compare"] = false;
                     object[".gogoproto.typedecl"] = false;
                     object[".gogoproto.messagename"] = false;
+                    object[".gogoproto.goprotoSizecache"] = false;
+                    object[".gogoproto.goprotoUnkeyed"] = false;
                     object[".gogoproto.stringer"] = false;
                 }
                 if (message.messageSetWireFormat != null && message.hasOwnProperty("messageSetWireFormat"))
@@ -17545,6 +17725,10 @@ $root.google = (function() {
                     object[".gogoproto.typedecl"] = message[".gogoproto.typedecl"];
                 if (message[".gogoproto.messagename"] != null && message.hasOwnProperty(".gogoproto.messagename"))
                     object[".gogoproto.messagename"] = message[".gogoproto.messagename"];
+                if (message[".gogoproto.goprotoSizecache"] != null && message.hasOwnProperty(".gogoproto.goprotoSizecache"))
+                    object[".gogoproto.goprotoSizecache"] = message[".gogoproto.goprotoSizecache"];
+                if (message[".gogoproto.goprotoUnkeyed"] != null && message.hasOwnProperty(".gogoproto.goprotoUnkeyed"))
+                    object[".gogoproto.goprotoUnkeyed"] = message[".gogoproto.goprotoUnkeyed"];
                 if (message[".gogoproto.stringer"] != null && message.hasOwnProperty(".gogoproto.stringer"))
                     object[".gogoproto.stringer"] = message[".gogoproto.stringer"];
                 return object;
@@ -17588,6 +17772,7 @@ $root.google = (function() {
              * @property {string|null} [".gogoproto.castvalue"] FieldOptions .gogoproto.castvalue
              * @property {boolean|null} [".gogoproto.stdtime"] FieldOptions .gogoproto.stdtime
              * @property {boolean|null} [".gogoproto.stdduration"] FieldOptions .gogoproto.stdduration
+             * @property {boolean|null} [".gogoproto.wktpointer"] FieldOptions .gogoproto.wktpointer
              */
 
             /**
@@ -17751,6 +17936,14 @@ $root.google = (function() {
             FieldOptions.prototype[".gogoproto.stdduration"] = false;
 
             /**
+             * FieldOptions .gogoproto.wktpointer.
+             * @member {boolean} .gogoproto.wktpointer
+             * @memberof google.protobuf.FieldOptions
+             * @instance
+             */
+            FieldOptions.prototype[".gogoproto.wktpointer"] = false;
+
+            /**
              * Creates a new FieldOptions instance using the specified properties.
              * @function create
              * @memberof google.protobuf.FieldOptions
@@ -17811,6 +18004,8 @@ $root.google = (function() {
                     writer.uint32(/* id 65010, wireType 0 =*/520080).bool(message[".gogoproto.stdtime"]);
                 if (message[".gogoproto.stdduration"] != null && message.hasOwnProperty(".gogoproto.stdduration"))
                     writer.uint32(/* id 65011, wireType 0 =*/520088).bool(message[".gogoproto.stdduration"]);
+                if (message[".gogoproto.wktpointer"] != null && message.hasOwnProperty(".gogoproto.wktpointer"))
+                    writer.uint32(/* id 65012, wireType 0 =*/520096).bool(message[".gogoproto.wktpointer"]);
                 return writer;
             };
 
@@ -17900,6 +18095,9 @@ $root.google = (function() {
                         break;
                     case 65011:
                         message[".gogoproto.stdduration"] = reader.bool();
+                        break;
+                    case 65012:
+                        message[".gogoproto.wktpointer"] = reader.bool();
                         break;
                     default:
                         reader.skipType(tag & 7);
@@ -18008,6 +18206,9 @@ $root.google = (function() {
                 if (message[".gogoproto.stdduration"] != null && message.hasOwnProperty(".gogoproto.stdduration"))
                     if (typeof message[".gogoproto.stdduration"] !== "boolean")
                         return ".gogoproto.stdduration: boolean expected";
+                if (message[".gogoproto.wktpointer"] != null && message.hasOwnProperty(".gogoproto.wktpointer"))
+                    if (typeof message[".gogoproto.wktpointer"] !== "boolean")
+                        return ".gogoproto.wktpointer: boolean expected";
                 return null;
             };
 
@@ -18091,6 +18292,8 @@ $root.google = (function() {
                     message[".gogoproto.stdtime"] = Boolean(object[".gogoproto.stdtime"]);
                 if (object[".gogoproto.stdduration"] != null)
                     message[".gogoproto.stdduration"] = Boolean(object[".gogoproto.stdduration"]);
+                if (object[".gogoproto.wktpointer"] != null)
+                    message[".gogoproto.wktpointer"] = Boolean(object[".gogoproto.wktpointer"]);
                 return message;
             };
 
@@ -18127,6 +18330,7 @@ $root.google = (function() {
                     object[".gogoproto.castvalue"] = "";
                     object[".gogoproto.stdtime"] = false;
                     object[".gogoproto.stdduration"] = false;
+                    object[".gogoproto.wktpointer"] = false;
                 }
                 if (message.ctype != null && message.hasOwnProperty("ctype"))
                     object.ctype = options.enums === String ? $root.google.protobuf.FieldOptions.CType[message.ctype] : message.ctype;
@@ -18167,6 +18371,8 @@ $root.google = (function() {
                     object[".gogoproto.stdtime"] = message[".gogoproto.stdtime"];
                 if (message[".gogoproto.stdduration"] != null && message.hasOwnProperty(".gogoproto.stdduration"))
                     object[".gogoproto.stdduration"] = message[".gogoproto.stdduration"];
+                if (message[".gogoproto.wktpointer"] != null && message.hasOwnProperty(".gogoproto.wktpointer"))
+                    object[".gogoproto.wktpointer"] = message[".gogoproto.wktpointer"];
                 return object;
             };
 
@@ -19614,7 +19820,7 @@ $root.google = (function() {
              * @memberof google.protobuf.UninterpretedOption
              * @instance
              */
-            UninterpretedOption.prototype.positiveIntValue = 0;
+            UninterpretedOption.prototype.positiveIntValue = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
             /**
              * UninterpretedOption negativeIntValue.
@@ -19622,7 +19828,7 @@ $root.google = (function() {
              * @memberof google.protobuf.UninterpretedOption
              * @instance
              */
-            UninterpretedOption.prototype.negativeIntValue = 0;
+            UninterpretedOption.prototype.negativeIntValue = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
             /**
              * UninterpretedOption doubleValue.
@@ -19880,8 +20086,16 @@ $root.google = (function() {
                     object.name = [];
                 if (options.defaults) {
                     object.identifierValue = "";
-                    object.positiveIntValue = 0;
-                    object.negativeIntValue = 0;
+                    if ($util.Long) {
+                        var long = new $util.Long(0, 0, true);
+                        object.positiveIntValue = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                    } else
+                        object.positiveIntValue = options.longs === String ? "0" : 0;
+                    if ($util.Long) {
+                        var long = new $util.Long(0, 0, false);
+                        object.negativeIntValue = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                    } else
+                        object.negativeIntValue = options.longs === String ? "0" : 0;
                     object.doubleValue = 0;
                     if (options.bytes === String)
                         object.stringValue = "";
@@ -21210,7 +21424,7 @@ $root.google = (function() {
              * @memberof google.protobuf.Timestamp
              * @instance
              */
-            Timestamp.prototype.seconds = 0;
+            Timestamp.prototype.seconds = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
             /**
              * Timestamp nanos.
@@ -21372,7 +21586,11 @@ $root.google = (function() {
                     options = {};
                 var object = {};
                 if (options.defaults) {
-                    object.seconds = 0;
+                    if ($util.Long) {
+                        var long = new $util.Long(0, 0, false);
+                        object.seconds = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                    } else
+                        object.seconds = options.longs === String ? "0" : 0;
                     object.nanos = 0;
                 }
                 if (message.seconds != null && message.hasOwnProperty("seconds"))
@@ -21403,475 +21621,6 @@ $root.google = (function() {
     })();
 
     return google;
-})();
-
-$root.common = (function() {
-
-    /**
-     * Namespace common.
-     * @exports common
-     * @namespace
-     */
-    var common = {};
-
-    common.KVPair = (function() {
-
-        /**
-         * Properties of a KVPair.
-         * @memberof common
-         * @interface IKVPair
-         * @property {Uint8Array|null} [key] KVPair key
-         * @property {Uint8Array|null} [value] KVPair value
-         */
-
-        /**
-         * Constructs a new KVPair.
-         * @memberof common
-         * @classdesc Represents a KVPair.
-         * @implements IKVPair
-         * @constructor
-         * @param {common.IKVPair=} [properties] Properties to set
-         */
-        function KVPair(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * KVPair key.
-         * @member {Uint8Array} key
-         * @memberof common.KVPair
-         * @instance
-         */
-        KVPair.prototype.key = $util.newBuffer([]);
-
-        /**
-         * KVPair value.
-         * @member {Uint8Array} value
-         * @memberof common.KVPair
-         * @instance
-         */
-        KVPair.prototype.value = $util.newBuffer([]);
-
-        /**
-         * Creates a new KVPair instance using the specified properties.
-         * @function create
-         * @memberof common.KVPair
-         * @static
-         * @param {common.IKVPair=} [properties] Properties to set
-         * @returns {common.KVPair} KVPair instance
-         */
-        KVPair.create = function create(properties) {
-            return new KVPair(properties);
-        };
-
-        /**
-         * Encodes the specified KVPair message. Does not implicitly {@link common.KVPair.verify|verify} messages.
-         * @function encode
-         * @memberof common.KVPair
-         * @static
-         * @param {common.IKVPair} message KVPair message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        KVPair.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.key != null && message.hasOwnProperty("key"))
-                writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.key);
-            if (message.value != null && message.hasOwnProperty("value"))
-                writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.value);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified KVPair message, length delimited. Does not implicitly {@link common.KVPair.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof common.KVPair
-         * @static
-         * @param {common.IKVPair} message KVPair message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        KVPair.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a KVPair message from the specified reader or buffer.
-         * @function decode
-         * @memberof common.KVPair
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {common.KVPair} KVPair
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        KVPair.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.KVPair();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.key = reader.bytes();
-                    break;
-                case 2:
-                    message.value = reader.bytes();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a KVPair message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof common.KVPair
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {common.KVPair} KVPair
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        KVPair.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a KVPair message.
-         * @function verify
-         * @memberof common.KVPair
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        KVPair.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.key != null && message.hasOwnProperty("key"))
-                if (!(message.key && typeof message.key.length === "number" || $util.isString(message.key)))
-                    return "key: buffer expected";
-            if (message.value != null && message.hasOwnProperty("value"))
-                if (!(message.value && typeof message.value.length === "number" || $util.isString(message.value)))
-                    return "value: buffer expected";
-            return null;
-        };
-
-        /**
-         * Creates a KVPair message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof common.KVPair
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {common.KVPair} KVPair
-         */
-        KVPair.fromObject = function fromObject(object) {
-            if (object instanceof $root.common.KVPair)
-                return object;
-            var message = new $root.common.KVPair();
-            if (object.key != null)
-                if (typeof object.key === "string")
-                    $util.base64.decode(object.key, message.key = $util.newBuffer($util.base64.length(object.key)), 0);
-                else if (object.key.length)
-                    message.key = object.key;
-            if (object.value != null)
-                if (typeof object.value === "string")
-                    $util.base64.decode(object.value, message.value = $util.newBuffer($util.base64.length(object.value)), 0);
-                else if (object.value.length)
-                    message.value = object.value;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a KVPair message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof common.KVPair
-         * @static
-         * @param {common.KVPair} message KVPair
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        KVPair.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if (options.bytes === String)
-                    object.key = "";
-                else {
-                    object.key = [];
-                    if (options.bytes !== Array)
-                        object.key = $util.newBuffer(object.key);
-                }
-                if (options.bytes === String)
-                    object.value = "";
-                else {
-                    object.value = [];
-                    if (options.bytes !== Array)
-                        object.value = $util.newBuffer(object.value);
-                }
-            }
-            if (message.key != null && message.hasOwnProperty("key"))
-                object.key = options.bytes === String ? $util.base64.encode(message.key, 0, message.key.length) : options.bytes === Array ? Array.prototype.slice.call(message.key) : message.key;
-            if (message.value != null && message.hasOwnProperty("value"))
-                object.value = options.bytes === String ? $util.base64.encode(message.value, 0, message.value.length) : options.bytes === Array ? Array.prototype.slice.call(message.value) : message.value;
-            return object;
-        };
-
-        /**
-         * Converts this KVPair to JSON.
-         * @function toJSON
-         * @memberof common.KVPair
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        KVPair.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return KVPair;
-    })();
-
-    common.KI64Pair = (function() {
-
-        /**
-         * Properties of a KI64Pair.
-         * @memberof common
-         * @interface IKI64Pair
-         * @property {Uint8Array|null} [key] KI64Pair key
-         * @property {number|Long|null} [value] KI64Pair value
-         */
-
-        /**
-         * Constructs a new KI64Pair.
-         * @memberof common
-         * @classdesc Represents a KI64Pair.
-         * @implements IKI64Pair
-         * @constructor
-         * @param {common.IKI64Pair=} [properties] Properties to set
-         */
-        function KI64Pair(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * KI64Pair key.
-         * @member {Uint8Array} key
-         * @memberof common.KI64Pair
-         * @instance
-         */
-        KI64Pair.prototype.key = $util.newBuffer([]);
-
-        /**
-         * KI64Pair value.
-         * @member {number|Long} value
-         * @memberof common.KI64Pair
-         * @instance
-         */
-        KI64Pair.prototype.value = 0;
-
-        /**
-         * Creates a new KI64Pair instance using the specified properties.
-         * @function create
-         * @memberof common.KI64Pair
-         * @static
-         * @param {common.IKI64Pair=} [properties] Properties to set
-         * @returns {common.KI64Pair} KI64Pair instance
-         */
-        KI64Pair.create = function create(properties) {
-            return new KI64Pair(properties);
-        };
-
-        /**
-         * Encodes the specified KI64Pair message. Does not implicitly {@link common.KI64Pair.verify|verify} messages.
-         * @function encode
-         * @memberof common.KI64Pair
-         * @static
-         * @param {common.IKI64Pair} message KI64Pair message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        KI64Pair.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.key != null && message.hasOwnProperty("key"))
-                writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.key);
-            if (message.value != null && message.hasOwnProperty("value"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.value);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified KI64Pair message, length delimited. Does not implicitly {@link common.KI64Pair.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof common.KI64Pair
-         * @static
-         * @param {common.IKI64Pair} message KI64Pair message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        KI64Pair.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a KI64Pair message from the specified reader or buffer.
-         * @function decode
-         * @memberof common.KI64Pair
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {common.KI64Pair} KI64Pair
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        KI64Pair.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.KI64Pair();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.key = reader.bytes();
-                    break;
-                case 2:
-                    message.value = reader.int64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a KI64Pair message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof common.KI64Pair
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {common.KI64Pair} KI64Pair
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        KI64Pair.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a KI64Pair message.
-         * @function verify
-         * @memberof common.KI64Pair
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        KI64Pair.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.key != null && message.hasOwnProperty("key"))
-                if (!(message.key && typeof message.key.length === "number" || $util.isString(message.key)))
-                    return "key: buffer expected";
-            if (message.value != null && message.hasOwnProperty("value"))
-                if (!$util.isInteger(message.value) && !(message.value && $util.isInteger(message.value.low) && $util.isInteger(message.value.high)))
-                    return "value: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a KI64Pair message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof common.KI64Pair
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {common.KI64Pair} KI64Pair
-         */
-        KI64Pair.fromObject = function fromObject(object) {
-            if (object instanceof $root.common.KI64Pair)
-                return object;
-            var message = new $root.common.KI64Pair();
-            if (object.key != null)
-                if (typeof object.key === "string")
-                    $util.base64.decode(object.key, message.key = $util.newBuffer($util.base64.length(object.key)), 0);
-                else if (object.key.length)
-                    message.key = object.key;
-            if (object.value != null)
-                if ($util.Long)
-                    (message.value = $util.Long.fromValue(object.value)).unsigned = false;
-                else if (typeof object.value === "string")
-                    message.value = parseInt(object.value, 10);
-                else if (typeof object.value === "number")
-                    message.value = object.value;
-                else if (typeof object.value === "object")
-                    message.value = new $util.LongBits(object.value.low >>> 0, object.value.high >>> 0).toNumber();
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a KI64Pair message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof common.KI64Pair
-         * @static
-         * @param {common.KI64Pair} message KI64Pair
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        KI64Pair.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if (options.bytes === String)
-                    object.key = "";
-                else {
-                    object.key = [];
-                    if (options.bytes !== Array)
-                        object.key = $util.newBuffer(object.key);
-                }
-                object.value = 0;
-            }
-            if (message.key != null && message.hasOwnProperty("key"))
-                object.key = options.bytes === String ? $util.base64.encode(message.key, 0, message.key.length) : options.bytes === Array ? Array.prototype.slice.call(message.key) : message.key;
-            if (message.value != null && message.hasOwnProperty("value"))
-                if (typeof message.value === "number")
-                    object.value = options.longs === String ? String(message.value) : message.value;
-                else
-                    object.value = options.longs === String ? $util.Long.prototype.toString.call(message.value) : options.longs === Number ? new $util.LongBits(message.value.low >>> 0, message.value.high >>> 0).toNumber() : message.value;
-            return object;
-        };
-
-        /**
-         * Converts this KI64Pair to JSON.
-         * @function toJSON
-         * @memberof common.KI64Pair
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        KI64Pair.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return KI64Pair;
-    })();
-
-    return common;
 })();
 
 $root.merkle = (function() {
@@ -22342,6 +22091,479 @@ $root.merkle = (function() {
     })();
 
     return merkle;
+})();
+
+$root.common = (function() {
+
+    /**
+     * Namespace common.
+     * @exports common
+     * @namespace
+     */
+    var common = {};
+
+    common.KVPair = (function() {
+
+        /**
+         * Properties of a KVPair.
+         * @memberof common
+         * @interface IKVPair
+         * @property {Uint8Array|null} [key] KVPair key
+         * @property {Uint8Array|null} [value] KVPair value
+         */
+
+        /**
+         * Constructs a new KVPair.
+         * @memberof common
+         * @classdesc Represents a KVPair.
+         * @implements IKVPair
+         * @constructor
+         * @param {common.IKVPair=} [properties] Properties to set
+         */
+        function KVPair(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * KVPair key.
+         * @member {Uint8Array} key
+         * @memberof common.KVPair
+         * @instance
+         */
+        KVPair.prototype.key = $util.newBuffer([]);
+
+        /**
+         * KVPair value.
+         * @member {Uint8Array} value
+         * @memberof common.KVPair
+         * @instance
+         */
+        KVPair.prototype.value = $util.newBuffer([]);
+
+        /**
+         * Creates a new KVPair instance using the specified properties.
+         * @function create
+         * @memberof common.KVPair
+         * @static
+         * @param {common.IKVPair=} [properties] Properties to set
+         * @returns {common.KVPair} KVPair instance
+         */
+        KVPair.create = function create(properties) {
+            return new KVPair(properties);
+        };
+
+        /**
+         * Encodes the specified KVPair message. Does not implicitly {@link common.KVPair.verify|verify} messages.
+         * @function encode
+         * @memberof common.KVPair
+         * @static
+         * @param {common.IKVPair} message KVPair message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        KVPair.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.key != null && message.hasOwnProperty("key"))
+                writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.key);
+            if (message.value != null && message.hasOwnProperty("value"))
+                writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.value);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified KVPair message, length delimited. Does not implicitly {@link common.KVPair.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof common.KVPair
+         * @static
+         * @param {common.IKVPair} message KVPair message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        KVPair.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a KVPair message from the specified reader or buffer.
+         * @function decode
+         * @memberof common.KVPair
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {common.KVPair} KVPair
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        KVPair.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.KVPair();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.key = reader.bytes();
+                    break;
+                case 2:
+                    message.value = reader.bytes();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a KVPair message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof common.KVPair
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {common.KVPair} KVPair
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        KVPair.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a KVPair message.
+         * @function verify
+         * @memberof common.KVPair
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        KVPair.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.key != null && message.hasOwnProperty("key"))
+                if (!(message.key && typeof message.key.length === "number" || $util.isString(message.key)))
+                    return "key: buffer expected";
+            if (message.value != null && message.hasOwnProperty("value"))
+                if (!(message.value && typeof message.value.length === "number" || $util.isString(message.value)))
+                    return "value: buffer expected";
+            return null;
+        };
+
+        /**
+         * Creates a KVPair message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof common.KVPair
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {common.KVPair} KVPair
+         */
+        KVPair.fromObject = function fromObject(object) {
+            if (object instanceof $root.common.KVPair)
+                return object;
+            var message = new $root.common.KVPair();
+            if (object.key != null)
+                if (typeof object.key === "string")
+                    $util.base64.decode(object.key, message.key = $util.newBuffer($util.base64.length(object.key)), 0);
+                else if (object.key.length)
+                    message.key = object.key;
+            if (object.value != null)
+                if (typeof object.value === "string")
+                    $util.base64.decode(object.value, message.value = $util.newBuffer($util.base64.length(object.value)), 0);
+                else if (object.value.length)
+                    message.value = object.value;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a KVPair message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof common.KVPair
+         * @static
+         * @param {common.KVPair} message KVPair
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        KVPair.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if (options.bytes === String)
+                    object.key = "";
+                else {
+                    object.key = [];
+                    if (options.bytes !== Array)
+                        object.key = $util.newBuffer(object.key);
+                }
+                if (options.bytes === String)
+                    object.value = "";
+                else {
+                    object.value = [];
+                    if (options.bytes !== Array)
+                        object.value = $util.newBuffer(object.value);
+                }
+            }
+            if (message.key != null && message.hasOwnProperty("key"))
+                object.key = options.bytes === String ? $util.base64.encode(message.key, 0, message.key.length) : options.bytes === Array ? Array.prototype.slice.call(message.key) : message.key;
+            if (message.value != null && message.hasOwnProperty("value"))
+                object.value = options.bytes === String ? $util.base64.encode(message.value, 0, message.value.length) : options.bytes === Array ? Array.prototype.slice.call(message.value) : message.value;
+            return object;
+        };
+
+        /**
+         * Converts this KVPair to JSON.
+         * @function toJSON
+         * @memberof common.KVPair
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        KVPair.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return KVPair;
+    })();
+
+    common.KI64Pair = (function() {
+
+        /**
+         * Properties of a KI64Pair.
+         * @memberof common
+         * @interface IKI64Pair
+         * @property {Uint8Array|null} [key] KI64Pair key
+         * @property {number|Long|null} [value] KI64Pair value
+         */
+
+        /**
+         * Constructs a new KI64Pair.
+         * @memberof common
+         * @classdesc Represents a KI64Pair.
+         * @implements IKI64Pair
+         * @constructor
+         * @param {common.IKI64Pair=} [properties] Properties to set
+         */
+        function KI64Pair(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * KI64Pair key.
+         * @member {Uint8Array} key
+         * @memberof common.KI64Pair
+         * @instance
+         */
+        KI64Pair.prototype.key = $util.newBuffer([]);
+
+        /**
+         * KI64Pair value.
+         * @member {number|Long} value
+         * @memberof common.KI64Pair
+         * @instance
+         */
+        KI64Pair.prototype.value = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * Creates a new KI64Pair instance using the specified properties.
+         * @function create
+         * @memberof common.KI64Pair
+         * @static
+         * @param {common.IKI64Pair=} [properties] Properties to set
+         * @returns {common.KI64Pair} KI64Pair instance
+         */
+        KI64Pair.create = function create(properties) {
+            return new KI64Pair(properties);
+        };
+
+        /**
+         * Encodes the specified KI64Pair message. Does not implicitly {@link common.KI64Pair.verify|verify} messages.
+         * @function encode
+         * @memberof common.KI64Pair
+         * @static
+         * @param {common.IKI64Pair} message KI64Pair message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        KI64Pair.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.key != null && message.hasOwnProperty("key"))
+                writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.key);
+            if (message.value != null && message.hasOwnProperty("value"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.value);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified KI64Pair message, length delimited. Does not implicitly {@link common.KI64Pair.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof common.KI64Pair
+         * @static
+         * @param {common.IKI64Pair} message KI64Pair message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        KI64Pair.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a KI64Pair message from the specified reader or buffer.
+         * @function decode
+         * @memberof common.KI64Pair
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {common.KI64Pair} KI64Pair
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        KI64Pair.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.KI64Pair();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.key = reader.bytes();
+                    break;
+                case 2:
+                    message.value = reader.int64();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a KI64Pair message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof common.KI64Pair
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {common.KI64Pair} KI64Pair
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        KI64Pair.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a KI64Pair message.
+         * @function verify
+         * @memberof common.KI64Pair
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        KI64Pair.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.key != null && message.hasOwnProperty("key"))
+                if (!(message.key && typeof message.key.length === "number" || $util.isString(message.key)))
+                    return "key: buffer expected";
+            if (message.value != null && message.hasOwnProperty("value"))
+                if (!$util.isInteger(message.value) && !(message.value && $util.isInteger(message.value.low) && $util.isInteger(message.value.high)))
+                    return "value: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a KI64Pair message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof common.KI64Pair
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {common.KI64Pair} KI64Pair
+         */
+        KI64Pair.fromObject = function fromObject(object) {
+            if (object instanceof $root.common.KI64Pair)
+                return object;
+            var message = new $root.common.KI64Pair();
+            if (object.key != null)
+                if (typeof object.key === "string")
+                    $util.base64.decode(object.key, message.key = $util.newBuffer($util.base64.length(object.key)), 0);
+                else if (object.key.length)
+                    message.key = object.key;
+            if (object.value != null)
+                if ($util.Long)
+                    (message.value = $util.Long.fromValue(object.value)).unsigned = false;
+                else if (typeof object.value === "string")
+                    message.value = parseInt(object.value, 10);
+                else if (typeof object.value === "number")
+                    message.value = object.value;
+                else if (typeof object.value === "object")
+                    message.value = new $util.LongBits(object.value.low >>> 0, object.value.high >>> 0).toNumber();
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a KI64Pair message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof common.KI64Pair
+         * @static
+         * @param {common.KI64Pair} message KI64Pair
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        KI64Pair.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if (options.bytes === String)
+                    object.key = "";
+                else {
+                    object.key = [];
+                    if (options.bytes !== Array)
+                        object.key = $util.newBuffer(object.key);
+                }
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.value = options.longs === String ? "0" : 0;
+            }
+            if (message.key != null && message.hasOwnProperty("key"))
+                object.key = options.bytes === String ? $util.base64.encode(message.key, 0, message.key.length) : options.bytes === Array ? Array.prototype.slice.call(message.key) : message.key;
+            if (message.value != null && message.hasOwnProperty("value"))
+                if (typeof message.value === "number")
+                    object.value = options.longs === String ? String(message.value) : message.value;
+                else
+                    object.value = options.longs === String ? $util.Long.prototype.toString.call(message.value) : options.longs === Number ? new $util.LongBits(message.value.low >>> 0, message.value.high >>> 0).toNumber() : message.value;
+            return object;
+        };
+
+        /**
+         * Converts this KI64Pair to JSON.
+         * @function toJSON
+         * @memberof common.KI64Pair
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        KI64Pair.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return KI64Pair;
+    })();
+
+    return common;
 })();
 
 module.exports = $root;

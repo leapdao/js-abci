@@ -1,6 +1,6 @@
 {
   "name": "js-abci",
-  "version": "4.0.2",
+  "version": "5.0.1",
   "description": "Tendermint ABCI server",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "nyc": "^13.1.0",
     "standard": "^11.0.1",
     "tempy": "^0.2.1",
-    "tendermint-node": "^3.4.0"
+    "tendermint-node": "leapdao/tendermint-node#651dfacb781f184efe16732f78d29aae11bf7e41"
   },
   "directories": {
     "example": "example",

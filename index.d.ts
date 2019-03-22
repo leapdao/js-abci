@@ -2825,8 +2825,8 @@ export namespace abci {
     /** Properties of a ConsensusParams. */
     interface IConsensusParams {
 
-        /** ConsensusParams blockSize */
-        blockSize?: (abci.IBlockSizeParams|null);
+        /** ConsensusParams block */
+        block?: (abci.IBlockParams|null);
 
         /** ConsensusParams evidence */
         evidence?: (abci.IEvidenceParams|null);
@@ -2844,8 +2844,8 @@ export namespace abci {
          */
         constructor(properties?: abci.IConsensusParams);
 
-        /** ConsensusParams blockSize. */
-        public blockSize?: (abci.IBlockSizeParams|null);
+        /** ConsensusParams block. */
+        public block?: (abci.IBlockParams|null);
 
         /** ConsensusParams evidence. */
         public evidence?: (abci.IEvidenceParams|null);
@@ -2924,97 +2924,97 @@ export namespace abci {
         public toJSON(): { [k: string]: any };
     }
 
-    /** Properties of a BlockSizeParams. */
-    interface IBlockSizeParams {
+    /** Properties of a BlockParams. */
+    interface IBlockParams {
 
-        /** BlockSizeParams maxBytes */
+        /** BlockParams maxBytes */
         maxBytes?: (number|Long|null);
 
-        /** BlockSizeParams maxGas */
+        /** BlockParams maxGas */
         maxGas?: (number|Long|null);
     }
 
-    /** Represents a BlockSizeParams. */
-    class BlockSizeParams implements IBlockSizeParams {
+    /** Represents a BlockParams. */
+    class BlockParams implements IBlockParams {
 
         /**
-         * Constructs a new BlockSizeParams.
+         * Constructs a new BlockParams.
          * @param [properties] Properties to set
          */
-        constructor(properties?: abci.IBlockSizeParams);
+        constructor(properties?: abci.IBlockParams);
 
-        /** BlockSizeParams maxBytes. */
+        /** BlockParams maxBytes. */
         public maxBytes: (number|Long);
 
-        /** BlockSizeParams maxGas. */
+        /** BlockParams maxGas. */
         public maxGas: (number|Long);
 
         /**
-         * Creates a new BlockSizeParams instance using the specified properties.
+         * Creates a new BlockParams instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns BlockSizeParams instance
+         * @returns BlockParams instance
          */
-        public static create(properties?: abci.IBlockSizeParams): abci.BlockSizeParams;
+        public static create(properties?: abci.IBlockParams): abci.BlockParams;
 
         /**
-         * Encodes the specified BlockSizeParams message. Does not implicitly {@link abci.BlockSizeParams.verify|verify} messages.
-         * @param message BlockSizeParams message or plain object to encode
+         * Encodes the specified BlockParams message. Does not implicitly {@link abci.BlockParams.verify|verify} messages.
+         * @param message BlockParams message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: abci.IBlockSizeParams, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: abci.IBlockParams, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified BlockSizeParams message, length delimited. Does not implicitly {@link abci.BlockSizeParams.verify|verify} messages.
-         * @param message BlockSizeParams message or plain object to encode
+         * Encodes the specified BlockParams message, length delimited. Does not implicitly {@link abci.BlockParams.verify|verify} messages.
+         * @param message BlockParams message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: abci.IBlockSizeParams, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: abci.IBlockParams, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a BlockSizeParams message from the specified reader or buffer.
+         * Decodes a BlockParams message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns BlockSizeParams
+         * @returns BlockParams
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): abci.BlockSizeParams;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): abci.BlockParams;
 
         /**
-         * Decodes a BlockSizeParams message from the specified reader or buffer, length delimited.
+         * Decodes a BlockParams message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns BlockSizeParams
+         * @returns BlockParams
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): abci.BlockSizeParams;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): abci.BlockParams;
 
         /**
-         * Verifies a BlockSizeParams message.
+         * Verifies a BlockParams message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a BlockSizeParams message from a plain object. Also converts values to their respective internal types.
+         * Creates a BlockParams message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns BlockSizeParams
+         * @returns BlockParams
          */
-        public static fromObject(object: { [k: string]: any }): abci.BlockSizeParams;
+        public static fromObject(object: { [k: string]: any }): abci.BlockParams;
 
         /**
-         * Creates a plain object from a BlockSizeParams message. Also converts values to other types if specified.
-         * @param message BlockSizeParams
+         * Creates a plain object from a BlockParams message. Also converts values to other types if specified.
+         * @param message BlockParams
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: abci.BlockSizeParams, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: abci.BlockParams, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this BlockSizeParams to JSON.
+         * Converts this BlockParams to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -6184,6 +6184,12 @@ export namespace google {
 
             /** FileOptions .gogoproto.messagenameAll */
             ".gogoproto.messagenameAll"?: (boolean|null);
+
+            /** FileOptions .gogoproto.goprotoSizecacheAll */
+            ".gogoproto.goprotoSizecacheAll"?: (boolean|null);
+
+            /** FileOptions .gogoproto.goprotoUnkeyedAll */
+            ".gogoproto.goprotoUnkeyedAll"?: (boolean|null);
         }
 
         /** Represents a FileOptions. */
@@ -6422,6 +6428,12 @@ export namespace google {
 
             /** MessageOptions .gogoproto.messagename */
             ".gogoproto.messagename"?: (boolean|null);
+
+            /** MessageOptions .gogoproto.goprotoSizecache */
+            ".gogoproto.goprotoSizecache"?: (boolean|null);
+
+            /** MessageOptions .gogoproto.goprotoUnkeyed */
+            ".gogoproto.goprotoUnkeyed"?: (boolean|null);
         }
 
         /** Represents a MessageOptions. */
@@ -6575,6 +6587,9 @@ export namespace google {
 
             /** FieldOptions .gogoproto.stdduration */
             ".gogoproto.stdduration"?: (boolean|null);
+
+            /** FieldOptions .gogoproto.wktpointer */
+            ".gogoproto.wktpointer"?: (boolean|null);
         }
 
         /** Represents a FieldOptions. */
@@ -7940,202 +7955,6 @@ export namespace google {
     }
 }
 
-/** Namespace common. */
-export namespace common {
-
-    /** Properties of a KVPair. */
-    interface IKVPair {
-
-        /** KVPair key */
-        key?: (Uint8Array|null);
-
-        /** KVPair value */
-        value?: (Uint8Array|null);
-    }
-
-    /** Represents a KVPair. */
-    class KVPair implements IKVPair {
-
-        /**
-         * Constructs a new KVPair.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: common.IKVPair);
-
-        /** KVPair key. */
-        public key: Uint8Array;
-
-        /** KVPair value. */
-        public value: Uint8Array;
-
-        /**
-         * Creates a new KVPair instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns KVPair instance
-         */
-        public static create(properties?: common.IKVPair): common.KVPair;
-
-        /**
-         * Encodes the specified KVPair message. Does not implicitly {@link common.KVPair.verify|verify} messages.
-         * @param message KVPair message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: common.IKVPair, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified KVPair message, length delimited. Does not implicitly {@link common.KVPair.verify|verify} messages.
-         * @param message KVPair message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: common.IKVPair, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a KVPair message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns KVPair
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): common.KVPair;
-
-        /**
-         * Decodes a KVPair message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns KVPair
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): common.KVPair;
-
-        /**
-         * Verifies a KVPair message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a KVPair message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns KVPair
-         */
-        public static fromObject(object: { [k: string]: any }): common.KVPair;
-
-        /**
-         * Creates a plain object from a KVPair message. Also converts values to other types if specified.
-         * @param message KVPair
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: common.KVPair, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this KVPair to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a KI64Pair. */
-    interface IKI64Pair {
-
-        /** KI64Pair key */
-        key?: (Uint8Array|null);
-
-        /** KI64Pair value */
-        value?: (number|Long|null);
-    }
-
-    /** Represents a KI64Pair. */
-    class KI64Pair implements IKI64Pair {
-
-        /**
-         * Constructs a new KI64Pair.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: common.IKI64Pair);
-
-        /** KI64Pair key. */
-        public key: Uint8Array;
-
-        /** KI64Pair value. */
-        public value: (number|Long);
-
-        /**
-         * Creates a new KI64Pair instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns KI64Pair instance
-         */
-        public static create(properties?: common.IKI64Pair): common.KI64Pair;
-
-        /**
-         * Encodes the specified KI64Pair message. Does not implicitly {@link common.KI64Pair.verify|verify} messages.
-         * @param message KI64Pair message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: common.IKI64Pair, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified KI64Pair message, length delimited. Does not implicitly {@link common.KI64Pair.verify|verify} messages.
-         * @param message KI64Pair message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: common.IKI64Pair, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a KI64Pair message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns KI64Pair
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): common.KI64Pair;
-
-        /**
-         * Decodes a KI64Pair message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns KI64Pair
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): common.KI64Pair;
-
-        /**
-         * Verifies a KI64Pair message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a KI64Pair message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns KI64Pair
-         */
-        public static fromObject(object: { [k: string]: any }): common.KI64Pair;
-
-        /**
-         * Creates a plain object from a KI64Pair message. Also converts values to other types if specified.
-         * @param message KI64Pair
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: common.KI64Pair, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this KI64Pair to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-}
-
 /** Namespace merkle. */
 export namespace merkle {
 
@@ -8326,6 +8145,202 @@ export namespace merkle {
 
         /**
          * Converts this Proof to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+}
+
+/** Namespace common. */
+export namespace common {
+
+    /** Properties of a KVPair. */
+    interface IKVPair {
+
+        /** KVPair key */
+        key?: (Uint8Array|null);
+
+        /** KVPair value */
+        value?: (Uint8Array|null);
+    }
+
+    /** Represents a KVPair. */
+    class KVPair implements IKVPair {
+
+        /**
+         * Constructs a new KVPair.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: common.IKVPair);
+
+        /** KVPair key. */
+        public key: Uint8Array;
+
+        /** KVPair value. */
+        public value: Uint8Array;
+
+        /**
+         * Creates a new KVPair instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns KVPair instance
+         */
+        public static create(properties?: common.IKVPair): common.KVPair;
+
+        /**
+         * Encodes the specified KVPair message. Does not implicitly {@link common.KVPair.verify|verify} messages.
+         * @param message KVPair message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: common.IKVPair, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified KVPair message, length delimited. Does not implicitly {@link common.KVPair.verify|verify} messages.
+         * @param message KVPair message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: common.IKVPair, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a KVPair message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns KVPair
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): common.KVPair;
+
+        /**
+         * Decodes a KVPair message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns KVPair
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): common.KVPair;
+
+        /**
+         * Verifies a KVPair message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a KVPair message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns KVPair
+         */
+        public static fromObject(object: { [k: string]: any }): common.KVPair;
+
+        /**
+         * Creates a plain object from a KVPair message. Also converts values to other types if specified.
+         * @param message KVPair
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: common.KVPair, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this KVPair to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a KI64Pair. */
+    interface IKI64Pair {
+
+        /** KI64Pair key */
+        key?: (Uint8Array|null);
+
+        /** KI64Pair value */
+        value?: (number|Long|null);
+    }
+
+    /** Represents a KI64Pair. */
+    class KI64Pair implements IKI64Pair {
+
+        /**
+         * Constructs a new KI64Pair.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: common.IKI64Pair);
+
+        /** KI64Pair key. */
+        public key: Uint8Array;
+
+        /** KI64Pair value. */
+        public value: (number|Long);
+
+        /**
+         * Creates a new KI64Pair instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns KI64Pair instance
+         */
+        public static create(properties?: common.IKI64Pair): common.KI64Pair;
+
+        /**
+         * Encodes the specified KI64Pair message. Does not implicitly {@link common.KI64Pair.verify|verify} messages.
+         * @param message KI64Pair message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: common.IKI64Pair, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified KI64Pair message, length delimited. Does not implicitly {@link common.KI64Pair.verify|verify} messages.
+         * @param message KI64Pair message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: common.IKI64Pair, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a KI64Pair message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns KI64Pair
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): common.KI64Pair;
+
+        /**
+         * Decodes a KI64Pair message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns KI64Pair
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): common.KI64Pair;
+
+        /**
+         * Verifies a KI64Pair message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a KI64Pair message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns KI64Pair
+         */
+        public static fromObject(object: { [k: string]: any }): common.KI64Pair;
+
+        /**
+         * Creates a plain object from a KI64Pair message. Also converts values to other types if specified.
+         * @param message KI64Pair
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: common.KI64Pair, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this KI64Pair to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
